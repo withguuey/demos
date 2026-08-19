@@ -7,8 +7,12 @@ three ways: as a widget, as an in-app chat, and through the Guuey portal.
 Every demo is also a starter template. Pull one out and make it yours:
 
 ```bash
-npx @guuey/create-agentic-app my-app --example trimly
+npx degit withguuey/demos/trimly my-app
+cd my-app && pnpm install && pnpm bootstrap
 ```
+
+(`npx @guuey/create-agentic-app my-app --example trimly` does the same with
+bootstrap included — arriving with the next `@guuey/*` release.)
 
 | Directory  | Vertical            | Live demo                          |
 | ---------- | ------------------- | ---------------------------------- |
@@ -22,7 +26,9 @@ imports) — the shape a customer's own app would have.
 
 ## Building your own
 
-Start from the templates directly:
+Start from the templates directly (template support arrives with the next
+`@guuey/*` release; today's published scaffolder creates the pre-template
+shape):
 
 ```bash
 npx @guuey/create-agentic-app my-app --template agentic-app
