@@ -1,0 +1,535 @@
+/* trimly site styles — one accent, light/dark, no framework. */
+
+:root {
+  /* Trimly sky — kept in sync with theme.accent in guuey.app.json (which
+     main.tsx re-applies at runtime) so first paint never flashes another
+     color. The accent is LIGHT, so text ON it is ink, not white
+     (--accent-ink), and text links use a darkened sky (--accent-deep)
+     that stays readable on white. */
+  --app-accent: #3ac8ff;
+  --accent-ink: #0e1014;
+  --accent-deep: #0b87ba;
+  --bg: #ffffff;
+  --bg-soft: #f6f7f9;
+  --fg: #16181d;
+  --fg-soft: #5b6270;
+  --line: #e4e7ec;
+  --ok: #1a7f37;
+}
+
+:root[data-mode="dark"] {
+  --accent-deep: #3ac8ff;
+  --bg: #101216;
+  --bg-soft: #181b21;
+  --fg: #e8eaee;
+  --fg-soft: #9aa2b1;
+  --line: #262a33;
+  --ok: #3fb950;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+code,
+pre {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.9em;
+}
+
+pre {
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px 14px;
+  overflow-x: auto;
+}
+
+a {
+  color: var(--accent-deep);
+}
+
+.shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 24px;
+  border-bottom: 1px solid var(--line);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  color: var(--fg);
+  text-decoration: none;
+}
+
+.brand-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: var(--app-accent);
+  color: var(--accent-ink);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.topbar nav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.topbar nav a {
+  color: var(--fg-soft);
+  text-decoration: none;
+}
+
+.topbar nav a.active {
+  color: var(--fg);
+  font-weight: 600;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--fg);
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-accent {
+  background: var(--app-accent);
+  border-color: var(--app-accent);
+  color: var(--accent-ink);
+}
+
+.btn-wide {
+  width: 100%;
+}
+
+.page {
+  flex: 1;
+  width: 100%;
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+.hero {
+  text-align: center;
+  padding: 64px 0;
+}
+
+.hero h1 {
+  font-size: 44px;
+  margin: 0 0 12px;
+}
+
+.hero p {
+  color: var(--fg-soft);
+  font-size: 18px;
+  margin: 0 0 28px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.login {
+  display: flex;
+  justify-content: center;
+}
+
+.login-card,
+.gate-card {
+  width: 100%;
+  max-width: 380px;
+  margin-top: 48px;
+  padding: 28px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--bg-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.gate {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+.gate-card {
+  max-width: 520px;
+}
+
+.chat-page {
+  display: flex;
+  max-width: 880px;
+  height: calc(100vh - 61px);
+  padding: 16px 24px 24px;
+}
+
+.chat-fill {
+  flex: 1;
+  min-height: 0;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.card {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+  background: var(--bg);
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 8px 16px;
+  margin: 0;
+}
+
+.facts dt {
+  color: var(--fg-soft);
+}
+
+.facts dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.ok {
+  color: var(--ok);
+  font-weight: 600;
+}
+
+.calm {
+  color: var(--fg-soft);
+}
+
+.hint {
+  color: var(--fg-soft);
+  font-size: 14px;
+}
+
+.error {
+  color: #c0392b;
+  font-size: 14px;
+}
+
+/* ── Trimly product pages ─────────────────────────────────────────────
+   The fictional booking product this template is re-skinned into:
+   Calendar (stats + week grid) and Services (menu + staff). Tints ride
+   color-mix over the accent/fg tokens, so a different theme.accent in
+   guuey.app.json re-skins these too. */
+
+.cal-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.cal-header h1 {
+  margin: 0 0 4px;
+}
+
+.cal-header .calm {
+  margin: 0;
+}
+
+.cal-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.tag-mock {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--fg-soft);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 4px 10px;
+  white-space: nowrap;
+}
+
+.cal-card {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--bg);
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.cal-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+@media (min-width: 720px) {
+  .cal-stats {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.cal-stat {
+  background: var(--bg);
+  padding: 14px 20px;
+}
+
+.cal-stat .stat-label {
+  margin: 0 0 4px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--fg-soft);
+}
+
+.cal-stat .stat-value {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* The week grid needs ~640px; below that it scrolls inside this container
+   so the page body never overflows on a phone. */
+.cal-scroll {
+  overflow-x: auto;
+}
+
+.cal-grid {
+  min-width: 640px;
+  display: grid;
+  grid-template-columns: 56px repeat(5, minmax(0, 1fr));
+  grid-template-rows: 36px repeat(8, 48px);
+}
+
+.cal-corner {
+  border-bottom: 1px solid var(--line);
+}
+
+.cal-head {
+  border-bottom: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 10px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.cal-head .cal-date {
+  color: var(--fg-soft);
+  font-weight: 400;
+}
+
+.cal-hour {
+  border-top: 1px solid var(--line);
+  padding: 4px 8px 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  color: var(--fg-soft);
+}
+
+.cal-cell {
+  border-top: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+}
+
+/* Appointment blocks — placed over the cells on the same grid; the
+   row/column comes from inline styles (data-driven placement). */
+.appt {
+  margin: 3px;
+  border-radius: 10px;
+  border-left: 2px solid;
+  padding: 6px 8px;
+  overflow: hidden;
+}
+
+.appt p {
+  margin: 0;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.appt-service {
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.appt-who {
+  font-size: 10px;
+  color: var(--fg-soft);
+  line-height: 1.25;
+}
+
+.appt-accent {
+  background: color-mix(in srgb, var(--app-accent) 15%, transparent);
+  border-left-color: color-mix(in srgb, var(--app-accent) 60%, transparent);
+}
+
+.appt-muted {
+  background: color-mix(in srgb, var(--fg) 5%, transparent);
+  border-left-color: color-mix(in srgb, var(--fg) 20%, transparent);
+}
+
+/* The demo's punchline: a booking the agent made. */
+.appt-badge {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 4px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  background: var(--ok);
+  color: #fff;
+  border-radius: 999px;
+  padding: 2px 6px;
+  white-space: nowrap;
+}
+
+.services-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.services-table th,
+.services-table td {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.services-table th {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 500;
+  color: var(--fg-soft);
+}
+
+.services-table tr:last-child td {
+  border-bottom: none;
+}
+
+.staff-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.staff-card {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--bg-soft);
+}
+
+.staff-card p {
+  margin: 0;
+}
+
+.staff-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--app-accent) 25%, transparent);
+  color: var(--fg);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.staff-name {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.staff-meta {
+  font-size: 12px;
+  color: var(--fg-soft);
+}
+
+/* Landing extras — example asks + the fictional-product honesty strip. */
+.hero-asks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin: 0 0 28px;
+}
+
+.ask-chip {
+  font-size: 13px;
+  color: var(--fg-soft);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 6px 14px;
+  background: var(--bg-soft);
+}
+
+.hero .demo-strip {
+  margin: 40px 0 0;
+  font-size: 13px;
+  color: var(--fg-soft);
+}

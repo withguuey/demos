@@ -1,0 +1,28 @@
+{
+  "$schema": "./guuey.app.schema.json",
+  "schema": 1,
+  "bootstrapped": true,
+  "brand": {
+    "name": "Trimly",
+    "tagline": "The booking page that books itself.",
+    "logoText": "t"
+  },
+  "theme": {
+    "accent": "#3AC8FF",
+    "mode": "light"
+  },
+  "copy": {
+    "landing": {
+      "headline": "Ask Trimly anything.",
+      "sub": "Trimly is a fictional booking product with a real agent inside. Find a slot, move a booking, fill this afternoon's cancellation — open the chat, or use the launcher in the corner."
+    },
+    "login": {
+      "guestHint": "One click, no account — this browser gets its own private thread the Trimly agent remembers."
+    }
+  },
+  "auth": {
+    "oidc": null
+  },
+  "link": null,
+  "demoMode": true
+}

@@ -1,0 +1,42 @@
+#!/usr/bin/env node
+// pnpm dev — boots the whole local stack. Ctrl-C tears everything down.
+import { spawn } from "node:child_process";
+import { existsSync } from "node:fs";
+
+const procs = [];
+function boot(name, command, args, opts = {}) {
+  const child = spawn(command, args, { stdio: ["ignore", "pipe", "pipe"], ...opts });
+  const prefix = `[${name}]`.padEnd(9);
+  child.stdout.on("data", (d) => process.stdout.write(String(d).replace(/^/gm, prefix)));
+  child.stderr.on("data", (d) => process.stderr.write(String(d).replace(/^/gm, prefix)));
+  child.on("exit", (code) => {
+    if (code !== 0 && !shuttingDown) shutdown(`${name} exited (${code})`, 1);
+  });
+  procs.push(child);
+}
+let shuttingDown = false;
+function shutdown(reason, code = 0) {
+  if (shuttingDown) return;
+  shuttingDown = true;
+  console.log(`\n${reason} — shutting down`);
+  for (const p of procs) p.kill("SIGTERM");
+  setTimeout(() => process.exit(code), 500);
+}
+process.on("SIGINT", () => shutdown("interrupted"));
+process.on("SIGTERM", () => shutdown("terminated"));
+
+if (!existsSync(".env.local"))
+  console.warn("hint: cp .env.example .env.local and set your LLM key");
+
+// Declarative agent: no worker build. `guuey dev` boots @guuey/host straight
+// from guuey.json (snapshot-only mode — the production topology).
+boot("agent", "pnpm", ["exec", "guuey", "dev", "--serve", "--port", "6790"]);
+boot("ggui", "pnpm", ["exec", "ggui", "serve", "--mcp-only", "--dev-allow-all", "--port", "6781"], {
+  cwd: "ggui",
+});
+boot("web", "pnpm", ["--filter", "@trimly/web", "dev"], {
+  env: { ...process.env, PORT: "6890" },
+});
+
+console.log("\n  agent  http://localhost:6790");
+console.log("  ggui   http://localhost:6781   web      http://localhost:6890\n");
