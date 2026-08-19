@@ -1,0 +1,21 @@
+name: leak-scan
+
+# Publication-hygiene gate: this repository is public. Every push and pull
+# request runs scripts/leak-scan.sh over all tracked files. See the script
+# header for the rules and how allowlisting works (reviewed additions only).
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  leak-scan:
+    name: No private information in tracked files
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: leak-scan
+        run: bash scripts/leak-scan.sh

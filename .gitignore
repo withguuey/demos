@@ -1,0 +1,20 @@
+# Dependencies / build output
+node_modules/
+dist/
+.next/
+.turbo/
+*.tsbuildinfo
+
+# Local environment and generated cloud config — never tracked
+.env
+.env.*
+!.env.example
+amplify_outputs.json
+.amplify/
+auth.json
+
+# Editor / OS noise
+.DS_Store
+.vscode/
+.idea/
+*.log
