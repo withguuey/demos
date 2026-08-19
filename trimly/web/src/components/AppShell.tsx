@@ -23,6 +23,7 @@ import { oidcConfigured, signOutOidc } from "../lib/oidc";
 
 export function AppShell() {
   const navigate = useNavigate();
+  const linked = appConfig.link !== null;
   const mode = currentIdentityMode();
 
   async function handleLogOut() {
@@ -47,8 +48,14 @@ export function AppShell() {
             <NavLink to="/app/setup">Setup</NavLink>
           </nav>
           <nav className="sidebar-dock">
-            <NavLink to="/app/agent" className="dock-agent">
-              <span className="dock-dot" /> Agent
+            <NavLink
+              to="/app/agent"
+              className="dock-agent"
+              title={linked ? "Agent: live" : "Agent: offline until linked"}
+            >
+              <span className="dock-dot" aria-hidden="true" />
+              <span className="sr-only">{linked ? "live — " : "offline — "}</span>
+              Agent
             </NavLink>
             <NavLink to="/app/mobile">📱 Talk on mobile</NavLink>
             <button type="button" className="dock-logout" onClick={() => void handleLogOut()}>
