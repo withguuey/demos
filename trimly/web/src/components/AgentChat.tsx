@@ -9,7 +9,7 @@
  * secret. Never both.
  */
 import { useEffect, useState, type CSSProperties } from "react";
-import { GuueyChat } from "@guuey/chat/react";
+import { GuueyChat, type GuueyChatHandle } from "@guuey/chat/react";
 import type { GuueyChatTheme, PlanViewSummary, ViewRefItem } from "@guuey/chat";
 import { agentEndpointUrl, appConfig, historyBaseUrl } from "../config";
 import { currentIdentityMode, ensureGuestSecret } from "../lib/identity";
@@ -88,10 +88,15 @@ export function AgentChat({
   className,
   style,
   viewsBridge,
+  onReady,
 }: {
   className?: string;
   style?: CSSProperties;
   viewsBridge?: ViewsBridge;
+  /** The kit's imperative handle (send/prefill/threadId + 0.12's
+   * viewSlotProps) — the shell's canvas mount and the guided tour's
+   * fill-and-send both key on it. */
+  onReady?: (handle: GuueyChatHandle) => void;
 }) {
   // The user's CHOSEN mode wins: an explicit "Continue as guest" must never
   // be shadowed by a cached OIDC session. Only when no choice is recorded
@@ -130,6 +135,7 @@ export function AgentChat({
           onViewsChange: viewsBridge.onViewsChange,
         }
       : {}),
+    ...(onReady !== undefined ? { onReady } : {}),
   };
 
   return identity === "oidc" ? (

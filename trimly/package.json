@@ -9,7 +9,7 @@
     "status": "guuey apps get && guuey agent status"
   },
   "devDependencies": {
-    "@guuey/cli": "0.11.0",
+    "@guuey/cli": "0.12.0",
     "@ggui-ai/cli": "0.6.3"
   },
   "pnpm": {

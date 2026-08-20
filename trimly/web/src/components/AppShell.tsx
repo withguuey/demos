@@ -22,6 +22,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import type { PlanViewSummary, ViewRefItem } from "@guuey/chat";
+import type { GuueyChatHandle } from "@guuey/chat/react";
 import { GuueyView } from "@guuey/mcp-apps-host/react";
 import { appConfig } from "../config";
 import { AgentChat } from "../components/AgentChat";
@@ -61,6 +62,11 @@ export function AppShell() {
   const [selectedKey, setSelectedKey] = useState<string | undefined>(undefined);
   const [canvasShowsView, setCanvasShowsView] = useState(false);
   const newestKeyRef = useRef<string | undefined>(undefined);
+  // The kit's imperative handle (0.12): `viewSlotProps()` gives the canvas
+  // mount the SAME wiring the kit's inline mounts run with — theme
+  // announce, the default action relay, the model-context sink — so a
+  // rendered card's Confirm works on the host canvas too (guuey#335).
+  const [chat, setChat] = useState<GuueyChatHandle | null>(null);
 
   const onViewsChange = useCallback((next: PlanViewSummary[]) => {
     setViews(next);
@@ -125,6 +131,7 @@ export function AppShell() {
             <AgentChat
               className="rail-chat"
               viewsBridge={{ promotedViewKey: selectedKey, onViewRef, onViewsChange }}
+              onReady={setChat}
             />
           </div>
         </aside>
@@ -142,6 +149,7 @@ export function AppShell() {
                   key={selected.key}
                   mount={selected.mount}
                   title={selected.title}
+                  {...(chat !== null ? chat.viewSlotProps() : {})}
                   hostContext={VIEW_HOST_CONTEXT}
                   className="canvas-view-mount"
                 />
