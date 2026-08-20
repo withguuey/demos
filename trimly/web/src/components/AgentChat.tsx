@@ -10,11 +10,48 @@
  */
 import { useEffect, useState, type CSSProperties } from "react";
 import { GuueyChat } from "@guuey/chat/react";
+import type { PlanViewSummary, ViewRefItem } from "@guuey/chat";
 import { agentEndpointUrl, appConfig, historyBaseUrl } from "../config";
 import { currentIdentityMode, ensureGuestSecret } from "../lib/identity";
 import { getBearerToken, currentUser, oidcConfigured } from "../lib/oidc";
 
-export function AgentChat({ className, style }: { className?: string; style?: CSSProperties }) {
+/**
+ * The chat-rail bridge (agentic-app shell): with `viewsBridge` set, the
+ * chat runs the kit's CHIPS presentation — generative views collapse to
+ * compact chips in the rail, the full renders belong to the host's main
+ * canvas (fed by `onViewsChange`), and chip clicks re-select
+ * (`onViewRef` → `promotedViewKey`, the browser-history mechanic).
+ */
+export interface ViewsBridge {
+  promotedViewKey?: string | undefined;
+  onViewRef: (item: ViewRefItem) => void;
+  onViewsChange: (views: PlanViewSummary[]) => void;
+}
+
+/**
+ * Referentially STABLE policy override. The kit memoizes its policy on
+ * this object's identity — an inline literal here re-mints the policy
+ * every render, which recomputes the plan, which re-fires the views
+ * emission, which re-renders the host: an infinite setState loop
+ * ("Maximum update depth exceeded"). Module scope keeps one identity
+ * for the component's whole life.
+ */
+const RAIL_POLICY = { view: { timeoutMs: 8000, presentation: "chips" as const } };
+
+/** Stable identity callbacks — same rule as RAIL_POLICY: the kit's
+ * reader memo keys on these, so fresh arrows per render churn it. */
+const getGuestSecretStable = () => ensureGuestSecret();
+const getAccessTokenStable = () => getBearerToken();
+
+export function AgentChat({
+  className,
+  style,
+  viewsBridge,
+}: {
+  className?: string;
+  style?: CSSProperties;
+  viewsBridge?: ViewsBridge;
+}) {
   // The user's CHOSEN mode wins: an explicit "Continue as guest" must never
   // be shadowed by a cached OIDC session. Only when no choice is recorded
   // does a live session imply oidc.
@@ -43,11 +80,19 @@ export function AgentChat({ className, style }: { className?: string; style?: CS
     mode: appConfig.theme.mode,
     className,
     style,
+    ...(viewsBridge !== undefined
+      ? {
+          policy: RAIL_POLICY,
+          promotedViewKey: viewsBridge.promotedViewKey,
+          onViewRef: viewsBridge.onViewRef,
+          onViewsChange: viewsBridge.onViewsChange,
+        }
+      : {}),
   };
 
   return identity === "oidc" ? (
-    <GuueyChat {...shared} getAccessToken={() => getBearerToken()} />
+    <GuueyChat {...shared} getAccessToken={getAccessTokenStable} />
   ) : (
-    <GuueyChat {...shared} getGuestSecret={() => ensureGuestSecret()} />
+    <GuueyChat {...shared} getGuestSecret={getGuestSecretStable} />
   );
 }

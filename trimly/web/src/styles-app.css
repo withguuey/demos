@@ -1,5 +1,7 @@
-/* agentic-app shell — split sidebar + fullscreen-swap canvas. Loaded after
-   styles.css; only shell-specific rules live here. */
+/* agentic-app shell — chat-rail layout (guuey#303). Loaded after
+   styles.css; only shell-specific rules live here. Salon Editorial voice:
+   card-stock sidebar, hairline rules, espresso active bar, the canvas as
+   the warm ground the generated UI sits on. */
 
 .app-shell {
   min-height: 100vh;
@@ -14,7 +16,7 @@
 }
 
 .sidebar {
-  width: 220px;
+  width: 320px;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
@@ -26,79 +28,99 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  font-weight: 700;
-  padding: 16px;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 18px;
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--line);
 }
 
 .sidebar-menus {
   display: flex;
   flex-direction: column;
-  padding: 8px;
+  padding: 12px 10px;
   gap: 2px;
-  flex: 1;
 }
 
 .sidebar-menus a {
   padding: 9px 12px;
-  border-radius: 8px;
+  border-left: 2px solid transparent;
+  border-radius: 0;
   color: var(--fg-soft);
   text-decoration: none;
+  font-size: 12.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 .sidebar-menus a.active {
-  background: var(--bg);
+  border-left-color: var(--fg);
   color: var(--fg);
   font-weight: 600;
 }
 
-.sidebar-dock {
+/* The agent rail — the embed-SDK chat living in the lower sidebar. */
+.agent-rail {
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  padding: 8px;
-  border-top: 1px solid var(--line);
+  min-height: 0;
+  flex: 1;
+  margin-top: auto;
+  border-top: 1px solid var(--line-strong);
+  background: var(--bg);
 }
 
-.sidebar-dock a {
-  padding: 9px 12px;
-  border-radius: 8px;
-  color: var(--fg-soft);
-  text-decoration: none;
+.rail-chat {
+  flex: 1;
+  min-height: 0;
 }
 
-.sidebar-dock a.active {
-  background: var(--app-accent);
-  /* Trimly's sky accent is light — ink text, not white (see styles.css). */
-  color: var(--accent-ink);
-  font-weight: 600;
+.canvas-view {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
 }
 
-.dock-agent {
+.canvas-view-bar {
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 18px;
+  border-bottom: 1px solid var(--line);
+  background: var(--bg-soft);
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 15px;
 }
 
-.dock-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--ok);
+.canvas-view-bar .btn {
+  padding: 7px 14px;
+  font-size: 11px;
 }
 
-.dock-agent.active .dock-dot {
-  background: var(--accent-ink);
+.canvas-view-mount {
+  flex: 1;
+  min-height: 0;
+}
+
+.canvas-view-loading {
+  padding: 24px;
 }
 
 .dock-logout {
   margin-top: 4px;
   padding: 8px 12px;
   border: none;
-  border-radius: 8px;
+  border-left: 2px solid transparent;
+  border-radius: 0;
   background: transparent;
   color: var(--fg-soft);
   text-align: left;
-  font-size: 14px;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  letter-spacing: 0.04em;
   cursor: pointer;
 }
 
@@ -108,26 +130,32 @@
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+  background: var(--bg-deep);
 }
 
 .canvas .page {
-  max-width: 880px;
-}
-
-.agent-canvas {
-  flex: 1;
-  display: flex;
-  min-height: 0;
-  padding: 16px;
+  max-width: 960px;
 }
 
 .mobile-page {
   text-align: center;
 }
 
+.qr-link {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.qr-link a {
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
 .qr {
   border: 1px solid var(--line);
-  border-radius: 12px;
+  border-radius: 4px;
   padding: 8px;
   background: #fff;
 }

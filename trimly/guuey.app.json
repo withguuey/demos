@@ -13,8 +13,8 @@
   },
   "copy": {
     "landing": {
-      "headline": "Ask Trimly anything.",
-      "sub": "Trimly is a fictional booking product with a real agent inside. Find a slot, move a booking, fill this afternoon's cancellation — open the chat, or use the launcher in the corner."
+      "headline": "Every chair, beautifully booked.",
+      "sub": "Trimly keeps the book the way a good front desk would — clients simply ask, and the calendar answers. Find a slot, move a booking, fill this afternoon's cancellation."
     },
     "login": {
       "guestHint": "One click, no account — this browser gets its own private thread the Trimly agent remembers."
@@ -23,6 +23,15 @@
   "auth": {
     "oidc": null
   },
-  "link": null,
+  "link": {
+    "appId": "53e3b162-fb0e-4ad1-88ec-ff3bcc505336",
+    "env": "release",
+    "apiBaseUrl": "https://api.us-east-1.guuey.com/v1",
+    "endpointUrl": "https://53e3b162-fb0e-4ad1-88ec-ff3bcc505336.agents.us-east-1.guuey.com",
+    "widgetOrigin": "https://widget.guuey.com",
+    "portalUrl": "https://app.guuey.com",
+    "slug": null,
+    "pageUrl": null
+  },
   "demoMode": true
 }

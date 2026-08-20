@@ -28,15 +28,18 @@ process.on("SIGTERM", () => shutdown("terminated"));
 if (!existsSync(".env.local"))
   console.warn("hint: cp .env.example .env.local and set your LLM key");
 
-// Declarative agent: no worker build. `guuey dev` boots @guuey/host straight
-// from guuey.json (snapshot-only mode — the production topology).
+boot("worker", "pnpm", ["exec", "tsup", "--watch"]); // rebuilds guuey.worker.js on change
+// `guuey dev` auto-spawns every `kind: 'colocated'` mcpServers entry itself
+// (name→localhost devPort resolution) — the todo MCP is colocated, so it no
+// longer needs its own boot() here; a manual second spawn would double-bind
+// :6782 and crash with EADDRINUSE.
 boot("agent", "pnpm", ["exec", "guuey", "dev", "--serve", "--port", "6790"]);
 boot("ggui", "pnpm", ["exec", "ggui", "serve", "--mcp-only", "--dev-allow-all", "--port", "6781"], {
   cwd: "ggui",
 });
-boot("web", "pnpm", ["--filter", "@trimly/web", "dev"], {
+boot("web", "pnpm", ["--filter", "@fresh-trimly-shell/web", "dev"], {
   env: { ...process.env, PORT: "6890" },
 });
 
-console.log("\n  agent  http://localhost:6790");
+console.log("\n  agent  http://localhost:6790   todo-mcp http://localhost:6782");
 console.log("  ggui   http://localhost:6781   web      http://localhost:6890\n");

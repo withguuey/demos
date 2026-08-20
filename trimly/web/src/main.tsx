@@ -13,12 +13,22 @@ import { Login } from "./pages/Login";
 import { Home } from "./pages/Home";
 import { Calendar } from "./pages/Calendar";
 import { Services } from "./pages/Services";
-import { AgentCanvas } from "./pages/AgentCanvas";
 import { TalkOnMobile } from "./pages/TalkOnMobile";
 
 document.documentElement.dataset.mode = appConfig.theme.mode;
 document.documentElement.style.setProperty("--app-accent", appConfig.theme.accent);
 document.title = appConfig.brand.name;
+
+// The demo-tour slot (guuey#303): a PRIVATE, env-injected bundle — the
+// URL arrives at build time via VITE_DEMO_TOUR_SRC (set on the demo
+// hosting branch, never in this repo). Unset ⇒ no request, no tour.
+const tourSrc = import.meta.env.VITE_DEMO_TOUR_SRC;
+if (tourSrc !== undefined && tourSrc !== "") {
+  const s = document.createElement("script");
+  s.src = tourSrc;
+  s.defer = true;
+  document.head.append(s);
+}
 
 const router = createBrowserRouter([
   {
@@ -30,14 +40,14 @@ const router = createBrowserRouter([
     ],
   },
   {
-    // The product: split sidebar, fullscreen-swap agent canvas.
+    // The product: chat-rail shell — the agent rail in the lower
+    // sidebar, generated UI on the main canvas (guuey#303).
     path: "/app",
     element: <AppShell />,
     children: [
       { index: true, element: <Calendar /> },
       { path: "services", element: <Services /> },
       { path: "setup", element: <Home /> },
-      { path: "agent", element: <AgentCanvas /> },
       { path: "mobile", element: <TalkOnMobile /> },
     ],
   },

@@ -12,14 +12,17 @@ importers:
         specifier: 0.6.3
         version: 0.6.3(@aws-sdk/credential-provider-node@3.972.80)(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(@smithy/signature-v4@5.7.2)(@types/react-dom@19.2.4(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(ws@8.21.3)
       '@guuey/cli':
-        specifier: 0.9.0
-        version: 0.9.0(@anthropic-ai/claude-agent-sdk@0.3.235(@anthropic-ai/sdk@0.117.1(zod@4.4.3))(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(zod@4.4.3))(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+        specifier: 0.11.0
+        version: 0.11.0(@anthropic-ai/claude-agent-sdk@0.3.235(@anthropic-ai/sdk@0.117.1(zod@4.4.3))(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(zod@4.4.3))(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
 
   web:
     dependencies:
       '@guuey/chat':
-        specifier: 0.9.0
-        version: 0.9.0(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+        specifier: 0.11.0
+        version: 0.11.0(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      '@guuey/mcp-apps-host':
+        specifier: 0.11.0
+        version: 0.11.0(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(zod@4.4.3)
       oidc-client-ts:
         specifier: ^3.1.0
         version: 3.5.0
@@ -679,12 +682,12 @@ packages:
     resolution: {integrity: sha512-IIxuh1JLQnoswSm0LowPUEzQsqiy3TxinKY/oPw7uY/W3icCkEmNMfyWG91JXyWG60q6bivprN8mDoR+7gj+WQ==}
     engines: {node: '>=20.0.0'}
 
-  '@ggui-ai/artifact-manifest@0.6.3':
-    resolution: {integrity: sha512-JMenWZu3wZ5F8AUtLUZHHiu0vorUBGXtOv00+/Kp7kNzVdZUp17MNAtKHat7TmU5zGPgMyP/33dvjIrqrRmUTg==}
+  '@ggui-ai/artifact-manifest@0.10.0':
+    resolution: {integrity: sha512-eAY0DttVabVheQP/mYyz7g46jBjnF8sOWAZhxT0b3GmkkFPrU/l1WWDRTimm3g1+fv7BPPTSXpipa7Aq9aYENQ==}
     engines: {node: '>=20.0.0'}
 
-  '@ggui-ai/artifact-manifest@0.9.0':
-    resolution: {integrity: sha512-KDHZYdV5kd6RchyowzjNhG0wq0zaKi3/P6BwHOx9nuPKLhPqofdtnIcMMe4zNtYRghNY9F4JDU+5a3vLf+1fxQ==}
+  '@ggui-ai/artifact-manifest@0.6.3':
+    resolution: {integrity: sha512-JMenWZu3wZ5F8AUtLUZHHiu0vorUBGXtOv00+/Kp7kNzVdZUp17MNAtKHat7TmU5zGPgMyP/33dvjIrqrRmUTg==}
     engines: {node: '>=20.0.0'}
 
   '@ggui-ai/cli@0.6.3':
@@ -768,12 +771,12 @@ packages:
     resolution: {integrity: sha512-M0LbvhvL1aXhgxaZ7FWxOTooIKGg81UpZEl/jUwHMSV/OhbMS0OoFyChsBuyEsQyD1zJVAyeyXRKPoGFIrZdPw==}
     engines: {node: '>=20.0.0'}
 
-  '@ggui-ai/protocol@0.6.3':
-    resolution: {integrity: sha512-vMxyKaoUsBZvl5GewZVSa/WdalLtq1Gm8SdWj7szT2xeu86nqJ3eNTa1kOk1pccs4CcjwEu6kBeDgy63oWkzfg==}
+  '@ggui-ai/protocol@0.10.0':
+    resolution: {integrity: sha512-5rkrTX32ThWcM+DCEKFxyy/L7Y7e2e+KIZM9kwK4PsYGckXOMfNZMp75R/7a4YlH9NAk+PRUhQPakTxFpcObfA==}
     engines: {node: '>=20.0.0'}
 
-  '@ggui-ai/protocol@0.9.0':
-    resolution: {integrity: sha512-rV1b/zcbeS1C0tnLCm0Y4KemtD9slphhB252DEHXSixB6mQPJbGifgs25FTs8G1d+J7zC0PL0nQVbcc3X94EZw==}
+  '@ggui-ai/protocol@0.6.3':
+    resolution: {integrity: sha512-vMxyKaoUsBZvl5GewZVSa/WdalLtq1Gm8SdWj7szT2xeu86nqJ3eNTa1kOk1pccs4CcjwEu6kBeDgy63oWkzfg==}
     engines: {node: '>=20.0.0'}
 
   '@ggui-ai/react@0.6.3':
@@ -854,13 +857,13 @@ packages:
       '@modelcontextprotocol/sdk':
         optional: true
 
-  '@guuey/agent-client@0.9.0':
-    resolution: {integrity: sha512-vhwdOAarQPMEMSfcCKbradu+res6XfkscuTOOX7htqNe4oeFHcgnxcOquNieRYNjOETwx69VvUbTXNoSP2wc0Q==}
+  '@guuey/agent-client@0.11.0':
+    resolution: {integrity: sha512-JE1jGQfL2Fslrm2QpGUPz7CXi0AD374J4qyRPZQKSZcsA0FqyIVyX5BJAq2KbQXLJz2gm11iEAIFp/478rzUIQ==}
     peerDependencies:
       react: '>=18'
 
-  '@guuey/chat@0.9.0':
-    resolution: {integrity: sha512-+mVqgygS1F6Zycn7gJyNnzNhibNAvFKOZGPHpyr6CgNyZKSJdTUlRTwlTaKzZR5CMlKNuOQwspMpc2ew62OXNA==}
+  '@guuey/chat@0.11.0':
+    resolution: {integrity: sha512-N+6i4F8p10XYD25XhllH6O80/zXarzZwIalXt8Ilx6aNmgtR8aZq94VC0nUFVJIVp1UwRR1x64Gd2Oj0xZJwJQ==}
     peerDependencies:
       react: '>=18'
       react-native: '>=0.76'
@@ -870,20 +873,20 @@ packages:
       react-native:
         optional: true
 
-  '@guuey/cli@0.9.0':
-    resolution: {integrity: sha512-XMTolLUNQsaMJ4T43NkqUZIlo6hqlZ+LT6Pu++Ja8o4Pi7IjQg+ak0w/u9TMYm0saRvl57peIMre+wU3pSBVrg==}
+  '@guuey/cli@0.11.0':
+    resolution: {integrity: sha512-WvfH3DYgAMihEWkjxo0FEp+UNUGr0HX+iVq9cDzQes1U87Zzv7OICct41CzuhqUarUu89u6D5PcyrknzfON0Lw==}
     hasBin: true
 
-  '@guuey/config@0.9.0':
-    resolution: {integrity: sha512-vZlewIx9Cuw17zdzhCQ6XUmgzZo9y+FhV9b8+m1Yy/12Fo2TfUb35VmeUFKnVVKwH3JXXK0E0/+m3/JjV1L2OQ==}
+  '@guuey/config@0.11.0':
+    resolution: {integrity: sha512-BulI59CDP54nBAfGV9kEXJxJ2j/83k8foZ/H6Br/TjFS88Vlha62bIm3yfetBa/gDXj++t/mGnmVL+32r19s4w==}
 
-  '@guuey/create-agentic-app@0.9.0':
-    resolution: {integrity: sha512-I6fKd4qxdutehCmy8gycqP3LN0+K3ARqak8bNF6BM6hf394P4iLwl41qiyBNSm4Jbv2561tgdaFoziNXEXX9rQ==}
+  '@guuey/create-agentic-app@0.11.0':
+    resolution: {integrity: sha512-UfW/EHx02+/Y0semELlqrzs9Ri9GKtkSydJ+Z7pQ3+ZxdaRds4Q22wD54vCUimnRAQQ0kcJCf1ToQRDmeRORSA==}
     engines: {node: '>=20'}
     hasBin: true
 
-  '@guuey/host@0.9.0':
-    resolution: {integrity: sha512-nBW1DAaPws+KgjX2LFzchUDiEKmFZtoaCrVsxqCiDvyHquQrw0bvzVF+WeOtGnekMJvHq0h3HLeJ2OraJSfHFg==}
+  '@guuey/host@0.11.0':
+    resolution: {integrity: sha512-MLzU4CUvewxJ8EZhBSGTpTkxnyL3r92bH4x8HjMOdENrPtGGiePneFTg9w0+eGvzyiF/4uqOPqSe+pPnASwtRg==}
     hasBin: true
     peerDependencies:
       '@anthropic-ai/claude-agent-sdk': ^0.3.199
@@ -897,16 +900,16 @@ packages:
       '@openai/agents':
         optional: true
 
-  '@guuey/mcp-apps-host@0.9.0':
-    resolution: {integrity: sha512-9O7ZNkHV1gfLuzJyNWQG1t6MTiQk4jQ+/+MGGvT7a5G/C9cdvkR923KurQWyteYC3qHG00O9YQuENVCR23NHqQ==}
+  '@guuey/mcp-apps-host@0.11.0':
+    resolution: {integrity: sha512-LsGcDiTxfpy3s9rsmVfz5mcEuZuE89GNkviHYt2XTj8PNBz4ZLgLsFvtm1QcgpCa2X2/D074QTYQjuUnIwg3WA==}
     peerDependencies:
       react: '>=18'
     peerDependenciesMeta:
       react:
         optional: true
 
-  '@guuey/worker@0.9.0':
-    resolution: {integrity: sha512-+NNlx9vq4GDFa0clS7uLf3W1av9UT6rusfkAV0hpgjtPry3D9onhGjShryRF2z87khXtOdUrQhe7t0sG7y95xA==}
+  '@guuey/worker@0.11.0':
+    resolution: {integrity: sha512-vWIfy30eIxDSY67X1gtMHx12Gk4Mcvzz+13yau4c+3Kp5Jh+i8sX/Ot6WG19rs128yZKyngFBqiq1XxDr4bVpg==}
 
   '@hono/node-server@2.1.1':
     resolution: {integrity: sha512-ELuehkj5VCBdgEw9zs+ivkKwyzzUCSQuE96YmiPvn1ECBoZCczbFXJLeEGMTYjphP6gydh4pHMqEYPVMYUVgQg==}
@@ -4455,18 +4458,18 @@ snapshots:
 
   '@ggui-ai/agent-runtime@0.6.3': {}
 
-  '@ggui-ai/artifact-manifest@0.6.3(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
+  '@ggui-ai/artifact-manifest@0.10.0(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
     dependencies:
-      '@ggui-ai/protocol': 0.6.3(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      '@ggui-ai/protocol': 0.10.0(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       zod: 4.4.3
     transitivePeerDependencies:
       - '@modelcontextprotocol/sdk'
       - react
       - react-dom
 
-  '@ggui-ai/artifact-manifest@0.9.0(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
+  '@ggui-ai/artifact-manifest@0.6.3(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
     dependencies:
-      '@ggui-ai/protocol': 0.9.0(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      '@ggui-ai/protocol': 0.6.3(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       zod: 4.4.3
     transitivePeerDependencies:
       - '@modelcontextprotocol/sdk'
@@ -4689,7 +4692,7 @@ snapshots:
       - react
       - react-dom
 
-  '@ggui-ai/protocol@0.6.3(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
+  '@ggui-ai/protocol@0.10.0(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
     dependencies:
       '@modelcontextprotocol/ext-apps': 1.7.5(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(zod@4.4.3)
       ajv: 8.20.0
@@ -4701,7 +4704,7 @@ snapshots:
       - react
       - react-dom
 
-  '@ggui-ai/protocol@0.9.0(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
+  '@ggui-ai/protocol@0.6.3(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
     dependencies:
       '@modelcontextprotocol/ext-apps': 1.7.5(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(zod@4.4.3)
       ajv: 8.20.0
@@ -4828,9 +4831,9 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@guuey/agent-client@0.9.0(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(zod@4.4.3)':
+  '@guuey/agent-client@0.11.0(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(zod@4.4.3)':
     dependencies:
-      '@guuey/mcp-apps-host': 0.9.0(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(zod@4.4.3)
+      '@guuey/mcp-apps-host': 0.11.0(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(zod@4.4.3)
       '@silverprotocol/core': 0.5.0
       react: 19.2.8
     transitivePeerDependencies:
@@ -4838,10 +4841,10 @@ snapshots:
       - react-dom
       - zod
 
-  '@guuey/chat@0.9.0(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
+  '@guuey/chat@0.11.0(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
     dependencies:
-      '@guuey/agent-client': 0.9.0(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(zod@4.4.3)
-      '@guuey/mcp-apps-host': 0.9.0(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(zod@4.4.3)
+      '@guuey/agent-client': 0.11.0(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(zod@4.4.3)
+      '@guuey/mcp-apps-host': 0.11.0(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(zod@4.4.3)
       '@silverprotocol/core': 0.5.0
       '@silverprotocol/richtext': 0.5.0
       zod: 4.4.3
@@ -4851,14 +4854,14 @@ snapshots:
       - '@modelcontextprotocol/sdk'
       - react-dom
 
-  '@guuey/cli@0.9.0(@anthropic-ai/claude-agent-sdk@0.3.235(@anthropic-ai/sdk@0.117.1(zod@4.4.3))(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(zod@4.4.3))(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
+  '@guuey/cli@0.11.0(@anthropic-ai/claude-agent-sdk@0.3.235(@anthropic-ai/sdk@0.117.1(zod@4.4.3))(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(zod@4.4.3))(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
     dependencies:
-      '@ggui-ai/artifact-manifest': 0.9.0(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
-      '@ggui-ai/protocol': 0.9.0(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
-      '@guuey/config': 0.9.0
-      '@guuey/create-agentic-app': 0.9.0
-      '@guuey/host': 0.9.0(@anthropic-ai/claude-agent-sdk@0.3.235(@anthropic-ai/sdk@0.117.1(zod@4.4.3))(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(zod@4.4.3))
-      '@guuey/worker': 0.9.0
+      '@ggui-ai/artifact-manifest': 0.10.0(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      '@ggui-ai/protocol': 0.10.0(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      '@guuey/config': 0.11.0
+      '@guuey/create-agentic-app': 0.11.0
+      '@guuey/host': 0.11.0(@anthropic-ai/claude-agent-sdk@0.3.235(@anthropic-ai/sdk@0.117.1(zod@4.4.3))(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(zod@4.4.3))
+      '@guuey/worker': 0.11.0
       '@silverprotocol/claude-agent-sdk': 0.5.0(@anthropic-ai/claude-agent-sdk@0.3.235(@anthropic-ai/sdk@0.117.1(zod@4.4.3))(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(zod@4.4.3))
       '@silverprotocol/core': 0.5.0
       '@silverprotocol/google-adk': 0.5.0
@@ -4878,22 +4881,24 @@ snapshots:
       - react-dom
       - utf-8-validate
 
-  '@guuey/config@0.9.0':
+  '@guuey/config@0.11.0':
     dependencies:
       zod: 4.4.3
 
-  '@guuey/create-agentic-app@0.9.0': {}
-
-  '@guuey/host@0.9.0(@anthropic-ai/claude-agent-sdk@0.3.235(@anthropic-ai/sdk@0.117.1(zod@4.4.3))(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(zod@4.4.3))':
+  '@guuey/create-agentic-app@0.11.0':
     dependencies:
-      '@guuey/config': 0.9.0
-      '@guuey/worker': 0.9.0
+      tar: 7.5.22
+
+  '@guuey/host@0.11.0(@anthropic-ai/claude-agent-sdk@0.3.235(@anthropic-ai/sdk@0.117.1(zod@4.4.3))(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(zod@4.4.3))':
+    dependencies:
+      '@guuey/config': 0.11.0
+      '@guuey/worker': 0.11.0
     optionalDependencies:
       '@anthropic-ai/claude-agent-sdk': 0.3.235(@anthropic-ai/sdk@0.117.1(zod@4.4.3))(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(zod@4.4.3)
 
-  '@guuey/mcp-apps-host@0.9.0(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(zod@4.4.3)':
+  '@guuey/mcp-apps-host@0.11.0(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(zod@4.4.3)':
     dependencies:
-      '@ggui-ai/protocol': 0.9.0(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      '@ggui-ai/protocol': 0.10.0(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       '@modelcontextprotocol/ext-apps': 1.7.5(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(zod@4.4.3)
       '@silverprotocol/core': 0.5.0
     optionalDependencies:
@@ -4903,7 +4908,7 @@ snapshots:
       - react-dom
       - zod
 
-  '@guuey/worker@0.9.0': {}
+  '@guuey/worker@0.11.0': {}
 
   '@hono/node-server@2.1.1(hono@4.13.3)':
     dependencies:
