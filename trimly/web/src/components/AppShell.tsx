@@ -19,7 +19,7 @@
  * history"); a new render navigates forward automatically; picking a
  * menu swaps the canvas back to your pages.
  */
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import type { PlanViewSummary, ViewRefItem } from "@guuey/chat";
 import { GuueyView } from "@guuey/mcp-apps-host/react";
@@ -28,9 +28,31 @@ import { AgentChat } from "../components/AgentChat";
 import { currentIdentityMode, logOut } from "../lib/identity";
 import { oidcConfigured, signOutOidc } from "../lib/oidc";
 
+/**
+ * The theme announce for canvas-mounted generated UI (#302): one spec
+ * key, `hostContext.theme` — without it a render defaults its own way
+ * and a dark card lands on the cream app (caught live). Module scope
+ * for identity stability. Mode only by design: the palette-variable
+ * bridge (ggui#572) has no sender yet — when it does, tokens join here.
+ */
+const VIEW_HOST_CONTEXT = { theme: appConfig.theme.mode };
+
 export function AppShell() {
   const navigate = useNavigate();
   const mode = currentIdentityMode();
+
+  // The landing mounts the real widget launcher (distribution way #1);
+  // SPA navigation keeps its DOM alive, so inside the app shell it would
+  // float redundantly beside the agent rail. No hide verb exists in the
+  // frozen v1 widget vocabulary (guuey#315 tracks the real API) — until
+  // it lands, the sanctioned seam is the stable `.guuey-widget` class,
+  // toggled via a body flag while the shell is mounted (styles-app.css).
+  useEffect(() => {
+    document.body.dataset.appShell = "true";
+    return () => {
+      delete document.body.dataset.appShell;
+    };
+  }, []);
 
   // The rail↔canvas bridge: the kit's view roster (mount material lives
   // here, the rail shows only chips), the selected key, and whether the
@@ -120,6 +142,7 @@ export function AppShell() {
                   key={selected.key}
                   mount={selected.mount}
                   title={selected.title}
+                  hostContext={VIEW_HOST_CONTEXT}
                   className="canvas-view-mount"
                 />
               ) : (

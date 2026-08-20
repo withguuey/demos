@@ -10,7 +10,7 @@
  */
 import { useEffect, useState, type CSSProperties } from "react";
 import { GuueyChat } from "@guuey/chat/react";
-import type { PlanViewSummary, ViewRefItem } from "@guuey/chat";
+import type { GuueyChatTheme, PlanViewSummary, ViewRefItem } from "@guuey/chat";
 import { agentEndpointUrl, appConfig, historyBaseUrl } from "../config";
 import { currentIdentityMode, ensureGuestSecret } from "../lib/identity";
 import { getBearerToken, currentUser, oidcConfigured } from "../lib/oidc";
@@ -42,6 +42,47 @@ const RAIL_POLICY = { view: { timeoutMs: 8000, presentation: "chips" as const } 
  * reader memo keys on these, so fresh arrows per render churn it. */
 const getGuestSecretStable = () => ensureGuestSecret();
 const getAccessTokenStable = () => getBearerToken();
+
+/**
+ * Salon Editorial, projected onto the chat kit's token schema (#302:
+ * one theme drives site chrome, the rail, and the generated UI). Same
+ * values as styles.css's :root — keep the two in step by hand; the
+ * platform-data delivery of this object rides `guuey apps update
+ * --chat-theme-file` when guuey#283 lands. Module scope: theme objects
+ * are identity-compared upstream (the no-inline-closures caveat).
+ */
+const SALON_EDITORIAL_CHAT_THEME: GuueyChatTheme = {
+  name: "salon-editorial",
+  colors: {
+    light: {
+      accent: "#2b211a",
+      onAccent: "#f6f1e7",
+      ink: "#2b211a",
+      inkMuted: "rgba(43, 33, 26, 0.65)",
+      surface: "#fdfbf6",
+      canvas: "#f6f1e7",
+      canvasMuted: "#efe8d9",
+      error: "#a33a24",
+    },
+    dark: {
+      accent: "#f6f1e7",
+      onAccent: "#2b211a",
+      ink: "#f6f1e7",
+      inkMuted: "rgba(246, 241, 231, 0.68)",
+      surface: "#2b211a",
+      canvas: "#201913",
+      canvasMuted: "#1a140f",
+      error: "#e08a6e",
+    },
+  },
+  typography: {
+    fontFamily: '"Archivo", "Helvetica Neue", Arial, sans-serif',
+  },
+  shape: {
+    radius: "soft",
+    density: "compact",
+  },
+};
 
 export function AgentChat({
   className,
@@ -78,6 +119,7 @@ export function AgentChat({
     appId: appConfig.link?.appId ?? "local",
     apiBaseUrl: historyBaseUrl(),
     mode: appConfig.theme.mode,
+    theme: SALON_EDITORIAL_CHAT_THEME,
     className,
     style,
     ...(viewsBridge !== undefined

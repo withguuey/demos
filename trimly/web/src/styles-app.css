@@ -159,3 +159,11 @@
   padding: 8px;
   background: #fff;
 }
+
+/* The landing's widget launcher survives SPA navigation into the app
+   shell, where the agent rail already IS the chat surface — hide it
+   while the shell is mounted (body flag set by AppShell; `.guuey-widget`
+   is the loader's stable root class, per-guuey#315 interim guidance). */
+body[data-app-shell="true"] .guuey-widget {
+  display: none;
+}
