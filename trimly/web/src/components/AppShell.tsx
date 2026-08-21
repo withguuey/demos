@@ -85,16 +85,24 @@ export function AppShell() {
 
   const onViewsChange = useCallback((next: PlanViewSummary[]) => {
     setViews(next);
-    // Browser-history forward-navigation: a NEW live render takes the
-    // canvas. (Reversed find = newest mountable; live entries sit after
-    // history in the roster's transcript order.)
-    const newest = [...next].reverse().find((v) => v.mount !== null && v.phase !== "expired");
+    // Browser-history forward-navigation: a NEW **live** render takes the
+    // canvas. Provenance matters: on thread hydration the roster replays
+    // persisted HISTORY cards, and treating those as "the agent just drew
+    // UI" both hijacked the canvas on load and fired the tour's
+    // render-complete hook before any live turn (exec's 2/2 repro on a
+    // history-bearing browser — the tour skipped its rail step). History
+    // cards stay reachable through their chips; only origin:"live" mounts
+    // auto-promote or notify.
+    const newest = [...next]
+      .reverse()
+      .find((v) => v.origin === "live" && v.mount !== null && v.phase !== "expired");
     if (newest !== undefined && newest.key !== newestKeyRef.current) {
       newestKeyRef.current = newest.key;
       setSelectedKey(newest.key);
       setCanvasShowsView(true);
       // The demo-tour hook (guuey#303): step machines outside the app can
-      // key on "the agent just drew UI".
+      // key on "the agent just drew UI" — live renders only, by the same
+      // provenance rule.
       window.dispatchEvent(
         new CustomEvent("demo:render-complete", {
           detail: { key: newest.key, title: newest.title },
