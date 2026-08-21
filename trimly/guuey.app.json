@@ -8,16 +8,16 @@
     "logoText": "t"
   },
   "theme": {
-    "accent": "#3AC8FF",
+    "accent": "#C9A227",
     "mode": "light"
   },
   "copy": {
     "landing": {
       "headline": "Every chair, beautifully booked.",
-      "sub": "Trimly keeps the book the way a good front desk would — clients simply ask, and the calendar answers. Find a slot, move a booking, fill this afternoon's cancellation."
+      "sub": "Trimly keeps the book the way a good front desk would \u2014 clients simply ask, and the calendar answers. Find a slot, move a booking, fill this afternoon's cancellation."
     },
     "login": {
-      "guestHint": "One click, no account — this browser gets its own private thread the Trimly agent remembers."
+      "guestHint": "One click, no account \u2014 this browser gets its own private thread the Trimly agent remembers."
     }
   },
   "auth": {

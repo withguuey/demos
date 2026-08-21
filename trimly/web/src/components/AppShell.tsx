@@ -68,6 +68,21 @@ export function AppShell() {
   // rendered card's Confirm works on the host canvas too (guuey#335).
   const [chat, setChat] = useState<GuueyChatHandle | null>(null);
 
+  // The demo-tour ask hook (guuey#303 family, public contract like
+  // `demo:render-complete`): an external step machine dispatches
+  // `demo:ask` with {text} and the shell sends it through the rail's
+  // own composer gate — the tour's "Fill the input" button.
+  useEffect(() => {
+    const onAsk = (e: Event) => {
+      const text = (e as CustomEvent<{ text?: string }>).detail?.text;
+      if (typeof text === "string" && text !== "" && chat !== null) {
+        chat.send(text);
+      }
+    };
+    window.addEventListener("demo:ask", onAsk);
+    return () => window.removeEventListener("demo:ask", onAsk);
+  }, [chat]);
+
   const onViewsChange = useCallback((next: PlanViewSummary[]) => {
     setViews(next);
     // Browser-history forward-navigation: a NEW live render takes the
@@ -120,7 +135,7 @@ export function AppShell() {
             <NavLink to="/app/setup" onClick={() => setCanvasShowsView(false)}>
               Setup
             </NavLink>
-            <NavLink to="/app/mobile" onClick={() => setCanvasShowsView(false)}>
+            <NavLink to="/app/mobile" data-tour="mobile" onClick={() => setCanvasShowsView(false)}>
               📱 Talk on mobile
             </NavLink>
             <button type="button" className="dock-logout" onClick={() => void handleLogOut()}>

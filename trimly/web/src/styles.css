@@ -5,14 +5,15 @@
    widget launcher, and the generated UI's brand accent. */
 
 :root {
-  /* Trimly sky — kept in sync with theme.accent in guuey.app.json (which
-     main.tsx re-applies at runtime) so first paint never flashes another
-     color. Sky is the FOIL: small pops only. Primary actions are espresso
-     ink on cream (--primary/--primary-ink); text on sky is ink
-     (--accent-ink); links are ink with a sky hover. */
-  --app-accent: #3ac8ff;
+  /* Trimly gold (founder-ruled 2026-08-21: "replace the sky to gold") —
+     kept in sync with theme.accent in guuey.app.json (which main.tsx
+     re-applies at runtime) so first paint never flashes another color.
+     Gold is the FOIL: small pops only. Primary actions are espresso ink
+     on cream (--primary/--primary-ink); text on gold is ink
+     (--accent-ink); links are ink with a deep-gold hover. */
+  --app-accent: #c9a227;
   --accent-ink: #2b211a;
-  --accent-deep: #0b87ba;
+  --accent-deep: #8f7119;
   --bg: #f6f1e7; /* cream paper */
   --bg-soft: #fdfbf6; /* card stock */
   --bg-deep: #efe8d9; /* the canvas ground behind generated UI */
@@ -31,7 +32,7 @@
 
 :root[data-mode="dark"] {
   /* Espresso-side of the same palette (the shipped demo runs light). */
-  --accent-deep: #3ac8ff;
+  --accent-deep: #d9b64a;
   --bg: #201913;
   --bg-soft: #2b211a;
   --bg-deep: #1a140f;

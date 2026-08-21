@@ -21,7 +21,10 @@ export function TalkOnMobile() {
             Scan with a phone — the same agent, in the guuey portal. (The portal
             has its own sign-in, so phone conversations are separate threads.)
           </p>
-          <QrLink url={target} size={240} />
+          {/* data-tour: the demo tour's final step highlights the QR. */}
+          <div data-tour="qr" className="qr-tour-anchor">
+            <QrLink url={target} size={240} />
+          </div>
         </>
       ) : (
         <p className="calm">

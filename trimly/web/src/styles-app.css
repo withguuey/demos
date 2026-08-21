@@ -167,3 +167,9 @@
 body[data-app-shell="true"] .guuey-widget {
   display: none;
 }
+
+/* The demo tour's final step rings the QR itself — inline-block keeps
+   the anchor's box hugging the code instead of the full page width. */
+.qr-tour-anchor {
+  display: inline-block;
+}
