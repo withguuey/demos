@@ -76,7 +76,7 @@ function humanizeActionName(name: string): string {
  * (complex values are omitted, not serialized — the #218 no-raw-payload
  * discipline), capped at three pairs.
  */
-function projectSemanticAction(args: McpToolStructuredContent | undefined): string {
+function projectSemanticAction(args: McpToolStructuredContent | undefined): string | null {
   let verb: string | null = null;
   let params: Record<string, unknown> = {};
   if (args !== undefined) {
@@ -103,19 +103,24 @@ function projectSemanticAction(args: McpToolStructuredContent | undefined): stri
       params = nested as Record<string, unknown>;
     }
   }
-  const title = verb !== null ? humanizeActionName(verb) : "my selection";
+  // Reference detection: a hex-hash "verb" is a dispatch token, not a
+  // human action name — the payload lives iframe-side and CANNOT be
+  // projected. `intent` is runtime routing, never a user-meaningful pair.
+  const verbIsReference = verb !== null && /^[0-9a-f]{6,}$/i.test(verb);
   const pairs: string[] = [];
   for (const [k, v] of Object.entries(params)) {
-    if (ENVELOPE_KEYS.has(k)) continue;
+    if (ENVELOPE_KEYS.has(k) || k === "intent") continue;
     if (typeof v === "string" || typeof v === "number" || typeof v === "boolean") {
       const s = String(v);
-      if (s !== "" && s.length <= 60) pairs.push(`${k} ${s}`);
+      if (s !== "" && s.length <= 60 && !/^[0-9a-f]{6,}$/i.test(s)) pairs.push(`${k} ${s}`);
     }
     if (pairs.length >= 3) break;
   }
-  return pairs.length > 0
-    ? `I picked ${title}: ${pairs.join(", ")} — please continue.`
-    : `Please continue with ${title}.`;
+  // Nothing human to stage → null: the caller delivers via the relay
+  // instead (the backend can dereference what we cannot).
+  if (pairs.length === 0) return null;
+  const title = verb !== null && !verbIsReference ? humanizeActionName(verb) : "my selection";
+  return `I picked ${title}: ${pairs.join(", ")} — please continue.`;
 }
 
 export function AppShell() {
@@ -162,17 +167,23 @@ export function AppShell() {
   // no-churn rule.
   const stagedCallTool = useCallback(
     async (req: UiActionRequest): Promise<McpToolCallResult> => {
-      // SEMANTIC actions ALWAYS stage — no try-deliver-first: the kit's
-      // post-turn degrade answers as a NON-error result by design (#215:
-      // errors fed the legacy failure overlay), so inspecting the
-      // delivered result can never distinguish "heard" from "agent not
-      // listening" (exec's 2/2: the inspection gate passed the dead
-      // answer straight through to the card). On the canvas the render
-      // lands at turn-end, so post-turn is the norm; mid-turn staging is
-      // acceptable UX and strictly better than a silent loss.
+      // SEMANTIC actions stage into the composer ONLY when the wire
+      // carries real, human-projectable params. The ggui dispatch shape
+      // can instead carry a REFERENCE ({actionId: <hash>, intent:
+      // "selectSlot"} — the payload stays inside the iframe, resolved
+      // backend-side): staging a hash actively misleads (round-4 receipt:
+      // the agent replied "which time works?" to a hash it can never
+      // resolve), so reference-shaped actions go to the kit relay — the
+      // pod/persisted doors are the only parties that can dereference
+      // them (guuey#356's design axis). Params-shaped actions stage; the
+      // kit's non-error degrade makes result inspection useless (#215),
+      // so the split keys on the REQUEST shape, the one honest signal.
       if (UI_SEMANTIC_ACTION_TOOLS.has(req.name)) {
-        chatRef.current?.prefill(projectSemanticAction(req.arguments), { focus: true });
-        return { content: [{ type: "text", text: ACTION_STAGED_MSG }] };
+        const projection = projectSemanticAction(req.arguments);
+        if (projection !== null) {
+          chatRef.current?.prefill(projection, { focus: true });
+          return { content: [{ type: "text", text: ACTION_STAGED_MSG }] };
+        }
       }
       const kit = chatRef.current?.viewSlotProps().onCallTool;
       return kit !== undefined ? kit(req) : unavailableToolCallResult();
