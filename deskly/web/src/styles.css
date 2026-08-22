@@ -1,0 +1,865 @@
+/* deskly site styles — Precision Grid (direction C, founder-mapped to
+   Deskly). Dark, dense, operations-grade: IBM Plex Sans everywhere with
+   Plex Mono for data readouts — times, counts, SLA clocks set like
+   instrument panels. Carbon ground, chalk ink, 2px radii, hairline
+   rules. Deskly's amber is the SIGNAL (the page identity's accent,
+   carried into the generated UI's brand accent): primary actions
+   are amber with carbon text, statuses read in mono. One theme drives
+   the site chrome, the widget launcher, and the generated UI's brand
+   accent. */
+
+:root {
+  /* Deskly amber — kept in sync with theme.accent in guuey.app.json
+     (which main.tsx re-applies at runtime) so first paint never flashes
+     another color. Amber is the SIGNAL: primary actions and live
+     readouts. Text on amber is carbon (--accent-ink); links are chalk
+     with a lifted-amber hover (on dark, "deep" reads brighter). */
+  --app-accent: #ffb03a;
+  --accent-ink: #101318;
+  --accent-deep: #ffc96b;
+  --bg: #101318; /* carbon */
+  --bg-soft: #171b22; /* panel */
+  --bg-deep: #0b0d11; /* the canvas ground behind generated UI */
+  --panel: #14181f; /* rail / sub-panel */
+  --fg: #e8ecf1; /* chalk */
+  --fg-soft: rgba(232, 236, 241, 0.65);
+  --line: rgba(232, 236, 241, 0.12); /* hairline rules */
+  --line-strong: rgba(232, 236, 241, 0.28);
+  --ok: #3fdc97; /* open / on-track */
+  --warn: #e7c14d; /* tentative / at-risk */
+  --error: #f26a55; /* failure text — matches the chat theme's error */
+  --primary: #ffb03a;
+  --primary-ink: #101318;
+  --font-ui: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-display: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+:root[data-mode="light"] {
+  /* Chalk-paper side of the same palette (the shipped demo runs dark). */
+  --accent-deep: #b87a14;
+  --bg: #f4f6f9;
+  --bg-soft: #ffffff;
+  --bg-deep: #e9edf2;
+  --panel: #eef1f5;
+  --fg: #101318;
+  --fg-soft: rgba(16, 19, 24, 0.65);
+  --line: rgba(16, 19, 24, 0.14);
+  --line-strong: rgba(16, 19, 24, 0.3);
+  --ok: #1f9e63;
+  --warn: #a9820a;
+  --error: #b3372a;
+  --primary: #101318;
+  --primary-ink: #f4f6f9;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-ui);
+  background: var(--bg);
+  color: var(--fg);
+}
+
+/* The operator voice: one sans family, weight does the display work;
+   micro-labels are tracked-uppercase MONO — the instrument-panel label. */
+.display {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+  font-weight: 500;
+}
+
+.micro {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--fg-soft);
+  margin: 0;
+}
+
+code,
+pre {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+
+pre {
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  padding: 12px 14px;
+  overflow-x: auto;
+}
+
+a {
+  color: var(--fg);
+  text-decoration-color: var(--line-strong);
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  color: var(--accent-deep);
+}
+
+.shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 28px;
+  border-bottom: 1px solid var(--line);
+  background: var(--bg-soft);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 19px;
+  color: var(--fg);
+  text-decoration: none;
+}
+
+.brand-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 2px;
+  border: 1.5px solid var(--fg);
+  background: transparent;
+  color: var(--fg);
+  font-family: var(--font-mono);
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.topbar nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.topbar nav a {
+  color: var(--fg-soft);
+  text-decoration: none;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.topbar nav a.active {
+  color: var(--fg);
+  font-weight: 600;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 11px 20px;
+  border-radius: 2px;
+  border: 1px solid var(--line-strong);
+  background: transparent;
+  color: var(--fg);
+  font-family: var(--font-ui);
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Amber — the signal: the primary action carries carbon text. */
+.btn-primary {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--primary-ink);
+  font-weight: 600;
+}
+
+/* Same signal, kept as the template's accent-CTA hook. */
+.btn-accent {
+  background: var(--app-accent);
+  border-color: var(--app-accent);
+  color: var(--accent-ink);
+  font-weight: 600;
+}
+
+.btn-quiet {
+  border-color: transparent;
+  color: var(--fg-soft);
+  text-transform: none;
+  letter-spacing: 0.02em;
+}
+
+.btn-wide {
+  width: 100%;
+}
+
+.page {
+  flex: 1;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+/* ── Landing hero: operator split — copy beside the board panel. ── */
+.hero {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: 0;
+  padding: 0;
+  margin-top: 40px;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  background: var(--bg-soft);
+  overflow: hidden;
+  text-align: left;
+}
+
+.hero-copy {
+  padding: 40px 32px;
+  border-right: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.hero-copy .micro {
+  margin: 0;
+}
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 46px;
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  margin: 0;
+}
+
+.hero .hero-sub {
+  color: var(--fg-soft);
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 0;
+  max-width: 400px;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.hero-qr {
+  margin-top: 4px;
+}
+
+/* The board panel — the desk's numbers, hairline-ruled, from the same
+   fixtures the agent talks about. */
+.hero-board {
+  background: var(--panel);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.board-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.board-stat {
+  background: var(--bg-soft);
+  padding: 14px 16px;
+}
+
+.board-stat-label {
+  margin: 0 0 6px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 600;
+  color: var(--fg-soft);
+}
+
+.board-stat-value {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.board-quote {
+  margin: auto 0 0;
+  background: var(--primary);
+  color: var(--primary-ink);
+  border-radius: 2px;
+  padding: 12px 14px;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+}
+
+.login {
+  display: flex;
+  justify-content: center;
+}
+
+.login-card,
+.gate-card {
+  width: 100%;
+  max-width: 380px;
+  margin-top: 48px;
+  padding: 28px;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  background: var(--bg-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.gate {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+.gate-card {
+  max-width: 520px;
+}
+
+.chat-page {
+  display: flex;
+  max-width: 880px;
+  height: calc(100vh - 61px);
+  padding: 16px 24px 24px;
+}
+
+.chat-fill {
+  flex: 1;
+  min-height: 0;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.card {
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+  background: var(--bg-soft);
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 8px 16px;
+  margin: 0;
+}
+
+.facts dt {
+  color: var(--fg-soft);
+}
+
+.facts dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.ok {
+  color: var(--ok);
+  font-weight: 600;
+}
+
+.calm {
+  color: var(--fg-soft);
+}
+
+.hint {
+  color: var(--fg-soft);
+  font-size: 14px;
+}
+
+.error {
+  color: var(--error);
+  font-size: 14px;
+}
+
+/* A soft mono inline — sort notes, scope readouts. */
+.mono-soft {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+}
+
+/* ── Deskly product pages ─────────────────────────────────────────────
+   The fictional helpdesk product this template is re-skinned into:
+   Inbox (stats + ticket queue) and Reports (SLA panels + roster). Tints
+   ride color-mix over the accent/fg tokens, so a different theme.accent
+   in guuey.app.json re-skins these too. */
+
+.page-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.page-header h1 {
+  margin: 0 0 4px;
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.page-header .calm {
+  margin: 0;
+}
+
+.page-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.tag-mock {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 600;
+  color: var(--fg-soft);
+  border: 1px solid var(--line-strong);
+  border-radius: 2px;
+  padding: 4px 10px;
+  white-space: nowrap;
+}
+
+.queue-card {
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  background: var(--bg-soft);
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+/* Stats row — the instrument panel above the queue. */
+.queue-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+@media (min-width: 720px) {
+  .queue-stats {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.queue-stat {
+  background: var(--bg-soft);
+  padding: 14px 20px;
+}
+
+.stat-label {
+  margin: 0 0 4px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 600;
+  color: var(--fg-soft);
+}
+
+.stat-value {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+/* The queue table needs ~720px; below that it scrolls inside this
+   container so the page body never overflows on a phone. */
+.queue-scroll {
+  overflow-x: auto;
+}
+
+.queue-table {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+
+.queue-table th,
+.queue-table td {
+  text-align: left;
+  vertical-align: top;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+.queue-table th {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 600;
+  color: var(--fg-soft);
+}
+
+.queue-table tr:last-child td {
+  border-bottom: none;
+}
+
+.queue-table td p {
+  margin: 0;
+}
+
+.t-subject {
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.t-id {
+  margin-top: 2px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--fg-soft);
+}
+
+.t-requester {
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.t-org {
+  font-size: 12px;
+  color: var(--fg-soft);
+  white-space: nowrap;
+}
+
+.t-updated {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--fg-soft);
+  white-space: nowrap;
+}
+
+.t-nosla {
+  color: var(--fg-soft);
+}
+
+/* Priority chips — mono, tracked, tinted by state. */
+.prio {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 600;
+  border-radius: 2px;
+  padding: 3px 8px;
+  white-space: nowrap;
+}
+
+.prio-urgent {
+  color: var(--app-accent);
+  background: color-mix(in srgb, var(--app-accent) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--app-accent) 45%, transparent);
+}
+
+.prio-high {
+  color: var(--warn);
+  background: color-mix(in srgb, var(--warn) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--warn) 40%, transparent);
+}
+
+.prio-normal {
+  color: var(--fg-soft);
+  background: color-mix(in srgb, var(--fg) 5%, transparent);
+  border: 1px solid var(--line);
+}
+
+/* SLA clocks — always mono; the amber border marks the final hour. */
+.sla-chip {
+  /* position:relative keeps the a11y sr-only "(at risk)" span's
+     containing block INSIDE the queue's scroll clip — without it the
+     absolutely-positioned (invisible) box escapes .queue-scroll and
+     inflates document.scrollWidth by ~18px at narrow widths. */
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  padding: 3px 8px;
+  white-space: nowrap;
+  color: var(--fg);
+}
+
+.sla-risk {
+  border-color: var(--app-accent);
+  color: var(--app-accent);
+  background: color-mix(in srgb, var(--app-accent) 10%, transparent);
+}
+
+/* The demo's punchline: a ticket the agent triaged. */
+.agent-chip {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 8px;
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+  background: var(--app-accent);
+  color: var(--accent-ink);
+  border-radius: 2px;
+  padding: 2px 6px;
+  white-space: nowrap;
+  vertical-align: 1px;
+}
+
+/* ── Reports page ─────────────────────────────────────────────────── */
+
+.report-scroll {
+  overflow-x: auto;
+}
+
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.report-table th,
+.report-table td {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.report-table th {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 600;
+  color: var(--fg-soft);
+}
+
+.report-table tr:last-child td {
+  border-bottom: none;
+}
+
+.report-num {
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+
+.report-strong {
+  font-weight: 600;
+}
+
+.report-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+}
+
+.report-panel .stat-label {
+  margin-bottom: 8px;
+}
+
+.panel-value {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.panel-meta {
+  margin: 8px 0 0;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--fg-soft);
+}
+
+.trend-rows {
+  margin-top: 12px;
+  border-top: 1px solid var(--line);
+}
+
+.trend-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin: 0;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.trend-week {
+  color: var(--fg-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 10px;
+}
+
+.trend-value {
+  font-weight: 600;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.team-card {
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--bg-soft);
+}
+
+.team-card p {
+  margin: 0;
+}
+
+/* Truly circular by design — avatars stay round on the Precision Grid. */
+.team-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--panel);
+  border: 1px solid var(--line-strong);
+  color: var(--fg);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.team-name {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.team-meta {
+  font-size: 12px;
+  color: var(--fg-soft);
+}
+
+.team-load {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+}
+
+/* Landing extras — example asks + the fictional-product honesty strip. */
+.hero-asks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+}
+
+.ask-chip {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--fg-soft);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  padding: 6px 12px;
+  background: var(--bg);
+}
+
+.demo-strip {
+  margin: 24px auto 0;
+  max-width: 960px;
+  padding: 0 24px;
+  font-size: 12.5px;
+  letter-spacing: 0.02em;
+  color: var(--fg-soft);
+  text-align: center;
+}
+
+/* Visually hidden, screen-reader available (state text for color-only cues). */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Operator split collapses on a phone: board panel below the copy. */
+@media (max-width: 860px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-copy {
+    border-right: none;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .hero h1 {
+    font-size: 36px;
+  }
+}

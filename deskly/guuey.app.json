@@ -1,0 +1,37 @@
+{
+  "$schema": "./guuey.app.schema.json",
+  "schema": 1,
+  "bootstrapped": true,
+  "brand": {
+    "name": "Deskly",
+    "tagline": "The helpdesk that triages itself.",
+    "logoText": "d"
+  },
+  "theme": {
+    "accent": "#FFB03A",
+    "mode": "dark"
+  },
+  "copy": {
+    "landing": {
+      "headline": "Every ticket, answered in time.",
+      "sub": "Deskly works the queue the way a calm senior agent would — customers simply ask, and the right ticket moves. Triage the morning rush, draft the reply, catch the breach before the clock does."
+    },
+    "login": {
+      "guestHint": "One click, no account — this browser gets its own private thread the Deskly agent remembers."
+    }
+  },
+  "auth": {
+    "oidc": null
+  },
+  "link": {
+    "appId": "fcac88b7-9e95-45aa-968d-7e703fdc7bbc",
+    "env": "release",
+    "apiBaseUrl": "https://api.us-east-1.guuey.com/v1",
+    "endpointUrl": "https://fcac88b7-9e95-45aa-968d-7e703fdc7bbc.agents.us-east-1.guuey.com",
+    "widgetOrigin": "https://widget.guuey.com",
+    "portalUrl": "https://app.guuey.com",
+    "slug": null,
+    "pageUrl": null
+  },
+  "demoMode": true
+}
