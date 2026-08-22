@@ -55,10 +55,20 @@ const VIEW_HOST_CONTEXT = { theme: appConfig.theme.mode };
  */
 function projectSemanticAction(args: McpToolStructuredContent | undefined): string {
   if (args !== undefined) {
+    const record = args as Record<string, unknown>;
     for (const key of ["label", "title", "text", "value", "name"]) {
-      const v = (args as Record<string, unknown>)[key];
+      const v = record[key];
       if (typeof v === "string" && v.trim() !== "" && v.length <= 120) {
         return `I picked: ${v.trim()} — please continue.`;
+      }
+    }
+    // No label-ish field (e.g. selectSlot carries only ids): fall back to
+    // the first short string value so the agent can resolve the choice
+    // ("slotId sat-1300-sam" reads fine and is user-meaningful inside the
+    // semantic gate).
+    for (const [k, v] of Object.entries(record)) {
+      if (typeof v === "string" && v.trim() !== "" && v.length <= 60) {
+        return `I picked the option ${k} ${v.trim()} — please continue.`;
       }
     }
   }
@@ -109,16 +119,22 @@ export function AppShell() {
   // no-churn rule.
   const stagedCallTool = useCallback(
     async (req: UiActionRequest): Promise<McpToolCallResult> => {
-      const kit = chatRef.current?.viewSlotProps().onCallTool;
-      const delivered = kit !== undefined ? await kit(req) : undefined;
-      if (delivered !== undefined && delivered.isError !== true) return delivered;
+      // SEMANTIC actions ALWAYS stage — no try-deliver-first: the kit's
+      // post-turn degrade answers as a NON-error result by design (#215:
+      // errors fed the legacy failure overlay), so inspecting the
+      // delivered result can never distinguish "heard" from "agent not
+      // listening" (exec's 2/2: the inspection gate passed the dead
+      // answer straight through to the card). On the canvas the render
+      // lands at turn-end, so post-turn is the norm; mid-turn staging is
+      // acceptable UX and strictly better than a silent loss.
       if (UI_SEMANTIC_ACTION_TOOLS.has(req.name)) {
         chatRef.current?.prefill(projectSemanticAction(req.arguments), { focus: true });
         return {
           content: [{ type: "text", text: "Queued in the composer — press Send to continue." }],
         };
       }
-      return delivered ?? unavailableToolCallResult();
+      const kit = chatRef.current?.viewSlotProps().onCallTool;
+      return kit !== undefined ? kit(req) : unavailableToolCallResult();
     },
     [],
   );
