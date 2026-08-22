@@ -1,0 +1,809 @@
+/* orderly site styles — Fresh Air (direction A, founder-mapped to
+   Orderly). Calm, airy, clinical-fresh: Bricolage Grotesque display
+   over Instrument Sans, paper ground, barely-there shadows, pill
+   buttons, whitespace doing the talking. Orderly's coral is the SIGNAL
+   (the page identity's accent — same identity-preserving move as
+   Trimly's sky→gold): the accent CTA and live chips are coral, primary
+   actions are ink pills on paper. One theme drives the site chrome,
+   the widget launcher, and the generated UI's brand accent. */
+
+:root {
+  /* Orderly coral — kept in sync with theme.accent in guuey.app.json
+     (which main.tsx re-applies at runtime) so first paint never
+     flashes another color. Coral is the SIGNAL: the accent CTA, status
+     chips, the mist tint. Text on coral is ink (--accent-ink); links
+     are ink with a deep-coral hover. */
+  --app-accent: #ff7a59;
+  --accent-ink: #0e1014;
+  --accent-deep: #a63d1e;
+  --bg: #fbfaf7; /* paper */
+  --bg-soft: #ffffff; /* card */
+  --bg-deep: #f6f4ef; /* the canvas ground behind generated UI */
+  --panel: #ffe8e1; /* coral mist — the tint layer (nav-active, chips) */
+  --fg: #0e1014; /* ink */
+  --fg-soft: rgba(14, 16, 20, 0.65);
+  --line: rgba(14, 16, 20, 0.1); /* hairline rules */
+  --line-strong: rgba(14, 16, 20, 0.22);
+  --ok: #17b26a; /* green — SHIPPED / on-track */
+  --warn: #f4b740; /* amber — LATE / needs a look */
+  --error: #a33a24; /* failure text — matches the chat theme's error */
+  --primary: #0e1014;
+  --primary-ink: #fbfaf7;
+  --font-ui: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+}
+
+:root[data-mode="dark"] {
+  /* Ink-side of the same palette (the shipped demo runs light). */
+  --accent-deep: #ffa588;
+  --bg: #121418;
+  --bg-soft: #1a1d23;
+  --bg-deep: #0d0f12;
+  --panel: #2a1f1b;
+  --fg: #fbfaf7;
+  --fg-soft: rgba(251, 250, 247, 0.68);
+  --line: rgba(251, 250, 247, 0.14);
+  --line-strong: rgba(251, 250, 247, 0.3);
+  --ok: #2bcb82;
+  --warn: #f4b740;
+  --error: #ff8d75;
+  --primary: #fbfaf7;
+  --primary-ink: #0e1014;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-ui);
+  background: var(--bg);
+  color: var(--fg);
+}
+
+/* The Fresh Air voice: Bricolage display (700–800 for heroes) + tracked
+   uppercase micro-labels in the UI face — no mono in the product voice
+   (code/pre below keep the terminal face for the wiring page). */
+.display {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+
+.micro {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--fg-soft);
+  margin: 0;
+}
+
+code,
+pre {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.9em;
+}
+
+pre {
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 12px 14px;
+  overflow-x: auto;
+}
+
+a {
+  color: var(--fg);
+  text-decoration-color: var(--line-strong);
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  color: var(--accent-deep);
+}
+
+.shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 28px;
+  border-bottom: 1px solid var(--line);
+  background: var(--bg-soft);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 19px;
+  color: var(--fg);
+  text-decoration: none;
+}
+
+/* The coral mark — same rounded square as the favicon, ink letter. */
+.brand-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  border: none;
+  background: var(--app-accent);
+  color: var(--accent-ink);
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.topbar nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.topbar nav a {
+  color: var(--fg-soft);
+  text-decoration: none;
+  font-size: 13.5px;
+  font-weight: 500;
+}
+
+.topbar nav a.active {
+  color: var(--fg);
+  font-weight: 600;
+}
+
+/* Pills all the way — Fresh Air has no square buttons. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 11px 22px;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  background: var(--bg-soft);
+  color: var(--fg);
+  font-family: var(--font-ui);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Ink — the primary action (ENTER THE DEMO). */
+.btn-primary {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--primary-ink);
+  font-weight: 600;
+}
+
+/* Coral — the signal pop (accent CTAs). */
+.btn-accent {
+  background: var(--app-accent);
+  border-color: var(--app-accent);
+  color: var(--accent-ink);
+  font-weight: 600;
+}
+
+.btn-quiet {
+  border-color: transparent;
+  background: transparent;
+  color: var(--fg-soft);
+  font-weight: 500;
+}
+
+.btn-wide {
+  width: 100%;
+}
+
+.page {
+  flex: 1;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+/* ── Landing hero: airy split — copy beside the day's stat board. ── */
+.hero {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: 0;
+  padding: 0;
+  margin-top: 40px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--bg-soft);
+  box-shadow: 0 6px 24px rgba(14, 16, 20, 0.05);
+  overflow: hidden;
+  text-align: left;
+}
+
+.hero-copy {
+  padding: 44px 36px;
+  border-right: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.hero-copy .micro {
+  margin: 0;
+}
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 46px;
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+  margin: 0;
+}
+
+.hero .hero-sub {
+  color: var(--fg-soft);
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 0;
+  max-width: 400px;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.hero-qr {
+  margin-top: 4px;
+}
+
+/* The mist board — the day's four stat cards from the fixtures. */
+.hero-board {
+  background: var(--panel);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.board-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.board-stat {
+  background: var(--bg-soft);
+  border-radius: 12px;
+  padding: 14px 16px;
+  box-shadow: 0 6px 24px rgba(14, 16, 20, 0.05);
+}
+
+.board-stat .stat-label {
+  margin: 0 0 6px;
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+  color: var(--fg-soft);
+}
+
+.board-stat .stat-value {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.board-quote {
+  margin: auto 0 0;
+  background: var(--primary);
+  color: var(--primary-ink);
+  border-radius: 999px;
+  padding: 12px 20px;
+  font-size: 13.5px;
+  font-weight: 500;
+}
+
+.login {
+  display: flex;
+  justify-content: center;
+}
+
+.login-card,
+.gate-card {
+  width: 100%;
+  max-width: 380px;
+  margin-top: 48px;
+  padding: 28px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--bg-soft);
+  box-shadow: 0 6px 24px rgba(14, 16, 20, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.gate {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+.gate-card {
+  max-width: 520px;
+}
+
+.chat-page {
+  display: flex;
+  max-width: 880px;
+  height: calc(100vh - 61px);
+  padding: 16px 24px 24px;
+}
+
+.chat-fill {
+  flex: 1;
+  min-height: 0;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.card {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+  background: var(--bg-soft);
+  box-shadow: 0 6px 24px rgba(14, 16, 20, 0.05);
+}
+
+.card h2 {
+  margin: 0 0 14px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 18px;
+  letter-spacing: -0.01em;
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 8px 16px;
+  margin: 0;
+}
+
+.facts dt {
+  color: var(--fg-soft);
+}
+
+.facts dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.ok {
+  color: var(--ok);
+  font-weight: 600;
+}
+
+.calm {
+  color: var(--fg-soft);
+}
+
+.hint {
+  color: var(--fg-soft);
+  font-size: 14px;
+}
+
+.error {
+  color: var(--error);
+  font-size: 14px;
+}
+
+/* ── Orderly product pages ────────────────────────────────────────────
+   The fictional e-commerce operations product this template is
+   re-skinned into: Orders (stats + live queue) and Refunds (review
+   desk). Tints ride color-mix over the accent/fg tokens, so a
+   different theme.accent in guuey.app.json re-skins these too. */
+
+.ord-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.ord-header h1 {
+  margin: 0 0 4px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 28px;
+  letter-spacing: -0.02em;
+}
+
+.ord-header .calm {
+  margin: 0;
+}
+
+.ord-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.tag-mock {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+  color: var(--fg-soft);
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  padding: 4px 10px;
+  white-space: nowrap;
+}
+
+.ord-card {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--bg-soft);
+  box-shadow: 0 6px 24px rgba(14, 16, 20, 0.05);
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.ord-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+@media (min-width: 720px) {
+  .ord-stats {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.ord-stat {
+  background: var(--bg-soft);
+  padding: 16px 20px;
+}
+
+.ord-stat .stat-label {
+  margin: 0 0 6px;
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+  color: var(--fg-soft);
+}
+
+.ord-stat .stat-value {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.ord-queue-bar {
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+/* Wide content scrolls inside its own container — the page body never
+   scrolls horizontally on a phone. */
+.table-scroll {
+  overflow-x: auto;
+}
+
+.orders-table {
+  width: 100%;
+  min-width: 640px;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.orders-table th,
+.orders-table td {
+  text-align: left;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+
+.orders-table th {
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+  color: var(--fg-soft);
+}
+
+.orders-table td:first-child {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 14.5px;
+}
+
+.orders-table td.num {
+  font-variant-numeric: tabular-nums;
+}
+
+.orders-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Status chips — pill tints over the tokens. Text carries the state
+   too (never color alone). */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 3px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.chip-shipped {
+  background: color-mix(in srgb, var(--ok) 14%, transparent);
+  color: color-mix(in srgb, var(--ok) 65%, var(--fg));
+}
+
+.chip-processing {
+  background: color-mix(in srgb, var(--fg) 6%, transparent);
+  color: var(--fg-soft);
+}
+
+.chip-late {
+  background: color-mix(in srgb, var(--warn) 24%, transparent);
+  color: color-mix(in srgb, var(--warn) 40%, var(--fg));
+}
+
+.chip-refund-requested {
+  background: var(--panel);
+  color: var(--accent-deep);
+}
+
+.chip-refunded {
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--fg-soft);
+}
+
+/* The demo's punchline: a refund the agent settled. Coral-tinted, no
+   mono — Fresh Air has no mono voice. */
+.agent-chip {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 8px;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+  background: var(--panel);
+  border: 1px solid color-mix(in srgb, var(--app-accent) 45%, transparent);
+  color: var(--accent-deep);
+  border-radius: 999px;
+  padding: 3px 8px;
+  white-space: nowrap;
+}
+
+/* A quiet affordance, not a control — money only moves on the agent's
+   explicit review surface (a hallucinated button charges your card). */
+.review-link {
+  margin-left: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent-deep);
+  white-space: nowrap;
+}
+
+/* ── Refunds: the review desk ── */
+.refund-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 14px;
+}
+
+.refund-card {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 18px 20px;
+  background: var(--bg-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.refund-card-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.refund-order {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.refund-amount {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 20px;
+  font-variant-numeric: tabular-nums;
+}
+
+.refund-meta {
+  margin: 0;
+  font-size: 13px;
+  color: var(--fg-soft);
+}
+
+.refund-reason {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.refund-note {
+  margin: 6px 0 0;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--fg-soft);
+}
+
+.refund-row {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.refund-row .card {
+  margin-bottom: 0;
+}
+
+.recent-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.recent-list li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 12px;
+  padding: 10px 0;
+  border-top: 1px solid var(--line);
+}
+
+.recent-order {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 14.5px;
+}
+
+.recent-meta {
+  font-size: 13px;
+  color: var(--fg-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+.rate-panel .rate-value {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 44px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.rate-panel .rate-compare {
+  margin: 8px 0 0;
+  font-size: 13px;
+  color: var(--fg-soft);
+}
+
+/* Landing extras — example asks + the fictional-product honesty strip. */
+.hero-asks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+}
+
+.ask-chip {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--fg-soft);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 6px 14px;
+  background: var(--bg);
+}
+
+.demo-strip {
+  margin: 24px auto 0;
+  max-width: 960px;
+  padding: 0 24px;
+  font-size: 12.5px;
+  letter-spacing: 0.02em;
+  color: var(--fg-soft);
+  text-align: center;
+}
+
+/* Visually hidden, screen-reader available (state text for color-only cues). */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Airy split collapses on a phone: board panel below the copy; the
+   refund desk stacks too. */
+@media (max-width: 860px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-copy {
+    border-right: none;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .hero h1 {
+    font-size: 36px;
+  }
+
+  .refund-row {
+    grid-template-columns: 1fr;
+  }
+}

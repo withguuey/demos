@@ -1,0 +1,166 @@
+/* agentic-app shell — chat-rail layout (guuey#303). Loaded after
+   styles.css; only shell-specific rules live here. Fresh Air voice:
+   white sidebar, hairline rules, pill nav with the coral-mist active
+   state, the canvas as the calm ground the generated UI sits on. */
+
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-body {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+}
+
+.sidebar {
+  width: 320px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--line);
+  background: var(--bg-soft);
+}
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--line);
+}
+
+.sidebar-menus {
+  display: flex;
+  flex-direction: column;
+  padding: 12px 12px;
+  gap: 3px;
+}
+
+.sidebar-menus a {
+  padding: 9px 14px;
+  border-radius: 999px;
+  color: var(--fg-soft);
+  text-decoration: none;
+  font-size: 13.5px;
+  font-weight: 500;
+}
+
+/* Active menu rides the coral mist — the tint layer, per the tokens. */
+.sidebar-menus a.active {
+  background: var(--panel);
+  color: var(--fg);
+  font-weight: 600;
+}
+
+/* The agent rail — the embed-SDK chat living in the lower sidebar. */
+.agent-rail {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  flex: 1;
+  margin-top: auto;
+  border-top: 1px solid var(--line-strong);
+  background: var(--bg);
+}
+
+.rail-chat {
+  flex: 1;
+  min-height: 0;
+}
+
+.canvas-view {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.canvas-view-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 18px;
+  border-bottom: 1px solid var(--line);
+  background: var(--bg-soft);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.canvas-view-bar .btn {
+  padding: 7px 14px;
+  font-size: 12px;
+}
+
+.canvas-view-mount {
+  flex: 1;
+  min-height: 0;
+}
+
+.canvas-view-loading {
+  padding: 24px;
+}
+
+.dock-logout {
+  margin-top: 4px;
+  padding: 9px 14px;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--fg-soft);
+  text-align: left;
+  font-family: var(--font-ui);
+  font-size: 12.5px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.canvas {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  background: var(--bg-deep);
+}
+
+.canvas .page {
+  max-width: 960px;
+}
+
+.mobile-page {
+  text-align: center;
+}
+
+.qr-link {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.qr-link a {
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+.qr {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 8px;
+  background: #fff;
+}
+
+
+/* The demo tour's final step rings the QR itself — inline-block keeps
+   the anchor's box hugging the code instead of the full page width. */
+.qr-tour-anchor {
+  display: inline-block;
+}

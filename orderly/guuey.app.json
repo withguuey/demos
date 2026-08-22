@@ -1,0 +1,37 @@
+{
+  "$schema": "./guuey.app.schema.json",
+  "schema": 1,
+  "bootstrapped": true,
+  "brand": {
+    "name": "Orderly",
+    "tagline": "The orders desk that clears itself.",
+    "logoText": "o"
+  },
+  "theme": {
+    "accent": "#FF7A59",
+    "mode": "light"
+  },
+  "copy": {
+    "landing": {
+      "headline": "Every order, on its way.",
+      "sub": "Orderly runs the desk the way your best ops lead would — ask, and the order moves. Chase the late shipment, walk the refund, keep the day's revenue honest."
+    },
+    "login": {
+      "guestHint": "One click, no account — this browser gets its own private thread the Orderly agent remembers."
+    }
+  },
+  "auth": {
+    "oidc": null
+  },
+  "link": {
+    "appId": "e6d33b33-6759-4efc-81fc-1f1bed457228",
+    "env": "release",
+    "apiBaseUrl": "https://api.us-east-1.guuey.com/v1",
+    "endpointUrl": "https://e6d33b33-6759-4efc-81fc-1f1bed457228.agents.us-east-1.guuey.com",
+    "widgetOrigin": "https://widget.guuey.com",
+    "portalUrl": "https://app.guuey.com",
+    "slug": null,
+    "pageUrl": null
+  },
+  "demoMode": true
+}
