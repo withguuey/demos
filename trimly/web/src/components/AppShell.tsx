@@ -24,6 +24,13 @@ import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import type { PlanViewSummary, ViewRefItem } from "@guuey/chat";
 import type { GuueyChatHandle } from "@guuey/chat/react";
 import { GuueyView } from "@guuey/mcp-apps-host/react";
+import {
+  UI_SEMANTIC_ACTION_TOOLS,
+  unavailableToolCallResult,
+  type McpToolCallResult,
+  type McpToolStructuredContent,
+  type UiActionRequest,
+} from "@guuey/mcp-apps-host";
 import { appConfig } from "../config";
 import { AgentChat } from "../components/AgentChat";
 import { currentIdentityMode, logOut } from "../lib/identity";
@@ -37,6 +44,26 @@ import { oidcConfigured, signOutOidc } from "../lib/oidc";
  * bridge (ggui#572) has no sender yet — when it does, tokens join here.
  */
 const VIEW_HOST_CONTEXT = { theme: appConfig.theme.mode };
+
+/**
+ * A human-readable projection of a SEMANTIC card action for composer
+ * staging (#198/#218's widget pattern, ported per guuey#356's interim
+ * guidance). Only ever called for tools in UI_SEMANTIC_ACTION_TOOLS —
+ * the set that carries a user gesture — so nothing plumbing-shaped can
+ * reach the composer. Picks the first obvious label-ish string from the
+ * action's arguments; generic fallback otherwise.
+ */
+function projectSemanticAction(args: McpToolStructuredContent | undefined): string {
+  if (args !== undefined) {
+    for (const key of ["label", "title", "text", "value", "name"]) {
+      const v = (args as Record<string, unknown>)[key];
+      if (typeof v === "string" && v.trim() !== "" && v.length <= 120) {
+        return `I picked: ${v.trim()} — please continue.`;
+      }
+    }
+  }
+  return "Please continue with my selection.";
+}
 
 export function AppShell() {
   const navigate = useNavigate();
@@ -67,6 +94,34 @@ export function AppShell() {
   // announce, the default action relay, the model-context sink — so a
   // rendered card's Confirm works on the host canvas too (guuey#335).
   const [chat, setChat] = useState<GuueyChatHandle | null>(null);
+  const chatRef = useRef<GuueyChatHandle | null>(null);
+  chatRef.current = chat;
+
+  // Post-turn card actions (the founder's in-card Confirm): the kit's
+  // relay delivers a click only while its turn can still hear it — past
+  // that, the pod 404s BY DESIGN and the raw failure surfaced in-card
+  // ("agent not listening", warm-up 2026-08-22). The widget solved this
+  // beat with #198/#218 composer STAGING; until guuey#356 makes that a
+  // kit seam, this shell ports the policy: try the kit's delivery first,
+  // and when a SEMANTIC action comes back errored, stage its projection
+  // into the composer instead — the click becomes the visitor's next
+  // message, one Send away. Stable identity (ref-read), per the
+  // no-churn rule.
+  const stagedCallTool = useCallback(
+    async (req: UiActionRequest): Promise<McpToolCallResult> => {
+      const kit = chatRef.current?.viewSlotProps().onCallTool;
+      const delivered = kit !== undefined ? await kit(req) : undefined;
+      if (delivered !== undefined && delivered.isError !== true) return delivered;
+      if (UI_SEMANTIC_ACTION_TOOLS.has(req.name)) {
+        chatRef.current?.prefill(projectSemanticAction(req.arguments), { focus: true });
+        return {
+          content: [{ type: "text", text: "Queued in the composer — press Send to continue." }],
+        };
+      }
+      return delivered ?? unavailableToolCallResult();
+    },
+    [],
+  );
 
   // The demo-tour ask hook (guuey#303 family, public contract like
   // `demo:render-complete`): an external step machine dispatches
@@ -173,6 +228,7 @@ export function AppShell() {
                   mount={selected.mount}
                   title={selected.title}
                   {...(chat !== null ? chat.viewSlotProps() : {})}
+                  onCallTool={stagedCallTool}
                   hostContext={VIEW_HOST_CONTEXT}
                   className="canvas-view-mount"
                 />
