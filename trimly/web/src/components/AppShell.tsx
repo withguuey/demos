@@ -35,6 +35,7 @@ import { appConfig } from "../config";
 import { AgentChat } from "../components/AgentChat";
 import { currentIdentityMode, logOut } from "../lib/identity";
 import { oidcConfigured, signOutOidc } from "../lib/oidc";
+import { hideWidget, showWidget } from "../lib/widget";
 
 /**
  * The theme announce for canvas-mounted generated UI (#302): one spec
@@ -129,14 +130,13 @@ export function AppShell() {
 
   // The landing mounts the real widget launcher (distribution way #1);
   // SPA navigation keeps its DOM alive, so inside the app shell it would
-  // float redundantly beside the agent rail. No hide verb exists in the
-  // frozen v1 widget vocabulary (guuey#315 tracks the real API) — until
-  // it lands, the sanctioned seam is the stable `.guuey-widget` class,
-  // toggled via a body flag while the shell is mounted (styles-app.css).
+  // float redundantly beside the agent rail. Hide it with the v1 verbs
+  // (guuey#315): idempotent and queue-shim safe, so this is correct even
+  // if the loader has not finished (or never loads on an unlinked build).
   useEffect(() => {
-    document.body.dataset.appShell = "true";
+    hideWidget();
     return () => {
-      delete document.body.dataset.appShell;
+      showWidget();
     };
   }, []);
 

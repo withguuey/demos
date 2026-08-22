@@ -72,6 +72,20 @@ export function mountWidget(onOutcome?: (o: WidgetOutcome) => void): boolean {
 }
 
 /**
+ * Hide/show the widget launcher (frozen v1 verbs, shipped per guuey#315:
+ * idempotent, and queue-shim safe — calling before the script loads just
+ * queues the verb). The app shell hides the launcher while mounted: the
+ * agent rail already IS the chat surface there.
+ */
+export function hideWidget(): void {
+  ensureGlobal()("hide");
+}
+
+export function showWidget(): void {
+  ensureGlobal()("show");
+}
+
+/**
  * A value embedded inside an inline <script> on the customer's page: JSON
  * string escaping, plus a `<` rewrite so a pathological brand name cannot
  * smuggle `</script>` and terminate the element (the same rule the widget's
