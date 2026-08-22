@@ -53,26 +53,69 @@ const VIEW_HOST_CONTEXT = { theme: appConfig.theme.mode };
  * reach the composer. Picks the first obvious label-ish string from the
  * action's arguments; generic fallback otherwise.
  */
+/** The widget's exact staged-answer text (WidgetView.ACTION_STAGED_MSG) —
+ * byte-matched so every layer that recognizes the known-good widget
+ * answer treats the canvas identically. */
+const ACTION_STAGED_MSG = "Queued — press Send to continue.";
+
+/** Wire-envelope fields that are protocol plumbing, never user meaning —
+ * round 2 staged "kind dispatch" because the projection read the ENVELOPE
+ * instead of the action's own params (exec's verbatim catch). */
+const ENVELOPE_KEYS = new Set(["kind", "type", "version", "schema", "id", "requestId", "resourceUri"]);
+
+function humanizeActionName(name: string): string {
+  return name.replace(/([a-z0-9])([A-Z])/g, "$1 $2").replace(/[_-]+/g, " ").toLowerCase().trim();
+}
+
+/**
+ * The widget's stagedActionText, ported + extended for the shape this
+ * layer sees: widget-style flat envelopes carry `actionId` + params;
+ * the canvas relay can also receive a dispatch envelope ({kind:
+ * "dispatch", …}) with the action nested one level down. Envelope keys
+ * never reach the projection; only primitive param values are printed
+ * (complex values are omitted, not serialized — the #218 no-raw-payload
+ * discipline), capped at three pairs.
+ */
 function projectSemanticAction(args: McpToolStructuredContent | undefined): string {
+  let verb: string | null = null;
+  let params: Record<string, unknown> = {};
   if (args !== undefined) {
-    const record = args as Record<string, unknown>;
-    for (const key of ["label", "title", "text", "value", "name"]) {
-      const v = record[key];
-      if (typeof v === "string" && v.trim() !== "" && v.length <= 120) {
-        return `I picked: ${v.trim()} — please continue.`;
+    let core: Record<string, unknown> = args as Record<string, unknown>;
+    // Dispatch envelope: descend into the first object-valued non-envelope
+    // field (the action body).
+    if (typeof core["actionId"] !== "string" && core["kind"] !== undefined) {
+      for (const [k, v] of Object.entries(core)) {
+        if (!ENVELOPE_KEYS.has(k) && typeof v === "object" && v !== null && !Array.isArray(v)) {
+          core = v as Record<string, unknown>;
+          break;
+        }
       }
     }
-    // No label-ish field (e.g. selectSlot carries only ids): fall back to
-    // the first short string value so the agent can resolve the choice
-    // ("slotId sat-1300-sam" reads fine and is user-meaningful inside the
-    // semantic gate).
-    for (const [k, v] of Object.entries(record)) {
-      if (typeof v === "string" && v.trim() !== "" && v.length <= 60) {
-        return `I picked the option ${k} ${v.trim()} — please continue.`;
-      }
+    const actionId = core["actionId"] ?? core["name"] ?? core["action"];
+    if (typeof actionId === "string" && actionId !== "") verb = actionId;
+    for (const [k, v] of Object.entries(core)) {
+      if (k === "actionId" || k === "name" || k === "action" || ENVELOPE_KEYS.has(k)) continue;
+      params[k] = v;
+    }
+    // Params may sit one level deeper still ({actionId, params: {...}}).
+    const nested = params["params"] ?? params["payload"] ?? params["arguments"];
+    if (typeof nested === "object" && nested !== null && !Array.isArray(nested)) {
+      params = nested as Record<string, unknown>;
     }
   }
-  return "Please continue with my selection.";
+  const title = verb !== null ? humanizeActionName(verb) : "my selection";
+  const pairs: string[] = [];
+  for (const [k, v] of Object.entries(params)) {
+    if (ENVELOPE_KEYS.has(k)) continue;
+    if (typeof v === "string" || typeof v === "number" || typeof v === "boolean") {
+      const s = String(v);
+      if (s !== "" && s.length <= 60) pairs.push(`${k} ${s}`);
+    }
+    if (pairs.length >= 3) break;
+  }
+  return pairs.length > 0
+    ? `I picked ${title}: ${pairs.join(", ")} — please continue.`
+    : `Please continue with ${title}.`;
 }
 
 export function AppShell() {
@@ -129,9 +172,7 @@ export function AppShell() {
       // acceptable UX and strictly better than a silent loss.
       if (UI_SEMANTIC_ACTION_TOOLS.has(req.name)) {
         chatRef.current?.prefill(projectSemanticAction(req.arguments), { focus: true });
-        return {
-          content: [{ type: "text", text: "Queued in the composer — press Send to continue." }],
-        };
+        return { content: [{ type: "text", text: ACTION_STAGED_MSG }] };
       }
       const kit = chatRef.current?.viewSlotProps().onCallTool;
       return kit !== undefined ? kit(req) : unavailableToolCallResult();
