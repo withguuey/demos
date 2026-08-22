@@ -1,0 +1,21 @@
+{
+  "name": "dealio",
+  "description": "Dealio — a fictional CRM for sales teams: a guuey agentic-app demo with a real, live agent inside.",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "bootstrap": "node scripts/bootstrap.mjs",
+    "status": "guuey apps get && guuey agent status"
+  },
+  "devDependencies": {
+    "@guuey/cli": "0.12.0",
+    "@ggui-ai/cli": "0.6.3"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  }
+}

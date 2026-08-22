@@ -1,0 +1,37 @@
+{
+  "$schema": "./guuey.app.schema.json",
+  "schema": 1,
+  "bootstrapped": true,
+  "brand": {
+    "name": "Dealio",
+    "tagline": "The pipeline that moves itself.",
+    "logoText": "d"
+  },
+  "theme": {
+    "accent": "#C29BFF",
+    "mode": "dark"
+  },
+  "copy": {
+    "landing": {
+      "headline": "No deal goes quiet.",
+      "sub": "Dealio keeps the pipeline warm the way a great sales lead would — ask, and the next step happens. Spot the stall, draft the follow-up, walk a deal to close."
+    },
+    "login": {
+      "guestHint": "One click, no account — this browser gets its own private thread the Dealio agent remembers."
+    }
+  },
+  "auth": {
+    "oidc": null
+  },
+  "link": {
+    "appId": "ba9ab3df-c663-47cc-87dc-d9591a872321",
+    "env": "release",
+    "apiBaseUrl": "https://api.us-east-1.guuey.com/v1",
+    "endpointUrl": "https://ba9ab3df-c663-47cc-87dc-d9591a872321.agents.us-east-1.guuey.com",
+    "widgetOrigin": "https://widget.guuey.com",
+    "portalUrl": "https://app.guuey.com",
+    "slug": null,
+    "pageUrl": null
+  },
+  "demoMode": true
+}
