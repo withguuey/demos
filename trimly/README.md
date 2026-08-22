@@ -38,7 +38,9 @@ Two deliberate absences in `guuey.json`, worth reading twice:
 pnpm install
 pnpm bootstrap               # brand, theme, copy → guuey.app.json + AGENTS.md (no account
                              #   needed; the web pages are gated on this and production
-                             #   builds fail without it — this repo ships already bootstrapped)
+                             #   builds fail without it — this repo ships already bootstrapped).
+                             #   On a fresh extraction this ALSO unbinds the hosted demo app,
+                             #   so your chat talks to YOUR local agent, not guuey's demo pod
 cp .env.example .env.local   # then set ANTHROPIC_API_KEY for local dev
 pnpm dev
 ```
@@ -58,8 +60,9 @@ Open http://localhost:6890 and talk to the agent.
 
 ```bash
 guuey login                        # device-flow auth
-guuey apps create --name my-trimly # create an app (this is where billing/trial starts)
-guuey deploy                       # ship the definition — declarative, so no build leg
+guuey apps create --name my-trimly # create an app (creating is free)
+guuey deploy                       # ship the definition — declarative, so no build leg;
+                                   #   your 7-day trial starts at this first successful deploy
 pnpm bootstrap -- --link           # bind the deployed app into the web frontend
 ```
 
@@ -79,8 +82,13 @@ same definition, deployed per environment:
 | dev (sandbox)        | `e14757d9-241c-4b8c-9355-75f51174eae2` |
 
 These ids are public by design — they identify the demo deployments guuey
-embeds on its own pages. They are documentation, not a binding: `guuey.json`
-here carries no `appId` on purpose (see above).
+embeds on its own pages. The AGENT definition is not bound to them:
+`guuey.json` carries no `appId` on purpose (see above), so `guuey deploy`
+from a clone ships _your_ app. The WEB frontend is a different story —
+`guuey.app.json` here ships with `link` bound to the production demo app,
+because that is exactly what the hosted demo pages build from. Your first
+`pnpm bootstrap` drops that binding (see Quick start), and
+`pnpm bootstrap -- --link` re-points it at your own deployed app.
 
 ## demoMode
 

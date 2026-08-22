@@ -5,8 +5,9 @@
  *   pnpm bootstrap                 local only, no account: brand, theme,
  *                                  copy → guuey.app.json + AGENTS.md
  *   pnpm bootstrap -- --link       bind an EXISTING guuey app (creation
- *                                  stays `guuey apps create` — the moment
- *                                  billing/trial starts remains explicit)
+ *                                  stays `guuey apps create`; the 7-day
+ *                                  trial clock starts at your first
+ *                                  successful `guuey deploy`)
  *
  * Contract: converging + idempotent (re-run any time), `--check` prints
  * machine-readable JSON of what's configured and what's missing, `--yes`
@@ -385,7 +386,21 @@ async function main() {
   config.copy.landing.headline = headline;
   config.bootstrapped = true;
   // A bootstrap makes the app YOURS — if this started life as a demo
-  // extraction (`--example`), the demo chrome turns off here.
+  // extraction (`--example`), the demo chrome turns off here, and the
+  // extraction's inherited `link` goes with it: it points at guuey's
+  // HOSTED demo deployment, and keeping it would send your fork's chat
+  // to that pod instead of your own agent (guuey#325). Guarded on
+  // demoMode so ONLY the demo binding is dropped — after this first run
+  // demoMode is false, and a link YOU bound via `--link` survives
+  // local-phase re-runs. (In the withguuey/demos source tree, where the
+  // deployed demo pages build from this same file, re-link after a
+  // local-phase run with `pnpm bootstrap -- --link --app-id <demo id>`.)
+  if (config.demoMode && config.link) {
+    config.link = null;
+    console.log(
+      "Unbound the example's hosted demo app — `pnpm dev` now talks to YOUR local agent (:6790); after `guuey deploy`, bind your own app with `pnpm bootstrap -- --link`.",
+    );
+  }
   config.demoMode = false;
   writeConfig(config);
   syncGguiTheme(config);

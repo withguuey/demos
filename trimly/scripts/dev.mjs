@@ -28,18 +28,17 @@ process.on("SIGTERM", () => shutdown("terminated"));
 if (!existsSync(".env.local"))
   console.warn("hint: cp .env.example .env.local and set your LLM key");
 
-boot("worker", "pnpm", ["exec", "tsup", "--watch"]); // rebuilds guuey.worker.js on change
-// `guuey dev` auto-spawns every `kind: 'colocated'` mcpServers entry itself
-// (name→localhost devPort resolution) — the todo MCP is colocated, so it no
-// longer needs its own boot() here; a manual second spawn would double-bind
-// :6782 and crash with EADDRINUSE.
+// Trimly's agent is DECLARATIVE (`guuey.json` mode) — no worker build, no
+// `src/`: `guuey dev` boots the platform harness straight from guuey.json +
+// prompts/. The generative-UI rail is the platform DEFAULT (guuey.json
+// deliberately has no mcpServers key — see README) and `guuey dev` points
+// that default at the local `ggui serve` process below.
 boot("agent", "pnpm", ["exec", "guuey", "dev", "--serve", "--port", "6790"]);
 boot("ggui", "pnpm", ["exec", "ggui", "serve", "--mcp-only", "--dev-allow-all", "--port", "6781"], {
   cwd: "ggui",
 });
-boot("web", "pnpm", ["--filter", "@fresh-trimly-shell/web", "dev"], {
-  env: { ...process.env, PORT: "6890" },
-});
+// The web app's own `dev` script pins its port (`vite --port 6890`).
+boot("web", "pnpm", ["--filter", "@trimly/web", "dev"]);
 
-console.log("\n  agent  http://localhost:6790   todo-mcp http://localhost:6782");
-console.log("  ggui   http://localhost:6781   web      http://localhost:6890\n");
+console.log("\n  agent  http://localhost:6790   ggui http://localhost:6781");
+console.log("  web    http://localhost:6890\n");

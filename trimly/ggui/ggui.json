@@ -10,6 +10,6 @@
   },
   "theme": {
     "preset": "indigo",
-    "mode": "dark"
+    "mode": "light"
   }
 }
