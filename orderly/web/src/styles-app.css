@@ -4,7 +4,14 @@
    state, the canvas as the calm ground the generated UI sits on. */
 
 .app-shell {
-  min-height: 100vh;
+  /* HEIGHT, not min-height: the shell must CAP at the viewport so the
+     rail's min-height:0 chain bites and the chat surface scrolls
+     internally — with min-height the sidebar's intrinsic content could
+     push the composer below the fold on short viewports (found at
+     820x900 in the Deskly pass). dvh keeps mobile URL-bar resizes
+     honest; the vh line is the fallback. */
+  height: 100vh;
+  height: 100dvh;
   display: flex;
   flex-direction: column;
 }
