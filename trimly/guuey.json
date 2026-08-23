@@ -14,5 +14,48 @@
       "kind": "invoke",
       "streaming": true
     }
+  },
+  "app": {
+    "theme": {
+      "name": "trimly-salon-editorial-v2-gold",
+      "mode": "light",
+      "colors": {
+        "light": {
+          "accent": "#c9a227",
+          "onAccent": "#2b211a",
+          "ink": "#2b211a",
+          "inkMuted": "rgba(43,33,26,0.65)",
+          "surface": "#fdfbf6",
+          "canvas": "#f6f1e7",
+          "canvasMuted": "#efe8d9",
+          "error": "#a33a24"
+        },
+        "dark": {
+          "accent": "#5c8dff",
+          "onAccent": "#0b0d12",
+          "ink": "#e8e9ee",
+          "inkMuted": "#9aa0ac",
+          "surface": "#1b1e26",
+          "canvas": "#0f1116",
+          "canvasMuted": "#1b1e26",
+          "error": "#ff6b6b"
+        }
+      },
+      "ramps": {
+        "light": {
+          "accent": {
+            "500": "#c9a227",
+            "600": "#a9871f",
+            "700": "#8f7119"
+          },
+          "error": {
+            "500": "#a33a24"
+          }
+        }
+      },
+      "typography": {
+        "fontFamily": "'Archivo', system-ui, sans-serif"
+      }
+    }
   }
 }
