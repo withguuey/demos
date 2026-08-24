@@ -66,6 +66,12 @@ guuey deploy                       # ship the definition — declarative, so no 
 pnpm bootstrap -- --link           # bind the deployed app into the web frontend
 ```
 
+**Cost note for forks:** this manifest carries `agent.deploy.size: "md"`
+(the hosted demo's pod size). If you are deploying your own copy and want
+the cheapest footprint, delete that block — the platform default (`xs`)
+applies, and you can scale later with `guuey agent config --max-pods` /
+`deploy.size`.
+
 `guuey deploy` prints your agent's endpoint URL and a Portal deep link; once
 deployed, your agent is reachable from the guuey Portal with zero frontend
 code — `web/` is the bring-your-own-frontend path this demo uses to be a

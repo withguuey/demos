@@ -13,6 +13,9 @@
     "endpoint": {
       "kind": "invoke",
       "streaming": true
+    },
+    "deploy": {
+      "size": "md"
     }
   }
 }
