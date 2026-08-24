@@ -24,13 +24,6 @@ import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import type { PlanViewSummary, ViewRefItem } from "@guuey/chat";
 import type { GuueyChatHandle } from "@guuey/chat/react";
 import { GuueyView } from "@guuey/mcp-apps-host/react";
-import {
-  UI_SEMANTIC_ACTION_TOOLS,
-  unavailableToolCallResult,
-  type McpToolCallResult,
-  type McpToolStructuredContent,
-  type UiActionRequest,
-} from "@guuey/mcp-apps-host";
 import { appConfig } from "../config";
 import { AgentChat } from "../components/AgentChat";
 import { currentIdentityMode, logOut } from "../lib/identity";
@@ -45,84 +38,6 @@ import { hideWidget, showWidget } from "../lib/widget";
  * bridge (ggui#572) has no sender yet — when it does, tokens join here.
  */
 const VIEW_HOST_CONTEXT = { theme: appConfig.theme.mode };
-
-/**
- * A human-readable projection of a SEMANTIC card action for composer
- * staging (#198/#218's widget pattern, ported per guuey#356's interim
- * guidance). Only ever called for tools in UI_SEMANTIC_ACTION_TOOLS —
- * the set that carries a user gesture — so nothing plumbing-shaped can
- * reach the composer. Picks the first obvious label-ish string from the
- * action's arguments; generic fallback otherwise.
- */
-/** The widget's exact staged-answer text (WidgetView.ACTION_STAGED_MSG) —
- * byte-matched so every layer that recognizes the known-good widget
- * answer treats the canvas identically. */
-const ACTION_STAGED_MSG = "Queued — press Send to continue.";
-
-/** Wire-envelope fields that are protocol plumbing, never user meaning —
- * round 2 staged "kind dispatch" because the projection read the ENVELOPE
- * instead of the action's own params (exec's verbatim catch). */
-const ENVELOPE_KEYS = new Set(["kind", "type", "version", "schema", "id", "requestId", "resourceUri"]);
-
-function humanizeActionName(name: string): string {
-  return name.replace(/([a-z0-9])([A-Z])/g, "$1 $2").replace(/[_-]+/g, " ").toLowerCase().trim();
-}
-
-/**
- * The widget's stagedActionText, ported + extended for the shape this
- * layer sees: widget-style flat envelopes carry `actionId` + params;
- * the canvas relay can also receive a dispatch envelope ({kind:
- * "dispatch", …}) with the action nested one level down. Envelope keys
- * never reach the projection; only primitive param values are printed
- * (complex values are omitted, not serialized — the #218 no-raw-payload
- * discipline), capped at three pairs.
- */
-function projectSemanticAction(args: McpToolStructuredContent | undefined): string | null {
-  let verb: string | null = null;
-  let params: Record<string, unknown> = {};
-  if (args !== undefined) {
-    let core: Record<string, unknown> = args as Record<string, unknown>;
-    // Dispatch envelope: descend into the first object-valued non-envelope
-    // field (the action body).
-    if (typeof core["actionId"] !== "string" && core["kind"] !== undefined) {
-      for (const [k, v] of Object.entries(core)) {
-        if (!ENVELOPE_KEYS.has(k) && typeof v === "object" && v !== null && !Array.isArray(v)) {
-          core = v as Record<string, unknown>;
-          break;
-        }
-      }
-    }
-    const actionId = core["actionId"] ?? core["name"] ?? core["action"];
-    if (typeof actionId === "string" && actionId !== "") verb = actionId;
-    for (const [k, v] of Object.entries(core)) {
-      if (k === "actionId" || k === "name" || k === "action" || ENVELOPE_KEYS.has(k)) continue;
-      params[k] = v;
-    }
-    // Params may sit one level deeper still ({actionId, params: {...}}).
-    const nested = params["params"] ?? params["payload"] ?? params["arguments"];
-    if (typeof nested === "object" && nested !== null && !Array.isArray(nested)) {
-      params = nested as Record<string, unknown>;
-    }
-  }
-  // Reference detection: a hex-hash "verb" is a dispatch token, not a
-  // human action name — the payload lives iframe-side and CANNOT be
-  // projected. `intent` is runtime routing, never a user-meaningful pair.
-  const verbIsReference = verb !== null && /^[0-9a-f]{6,}$/i.test(verb);
-  const pairs: string[] = [];
-  for (const [k, v] of Object.entries(params)) {
-    if (ENVELOPE_KEYS.has(k) || k === "intent") continue;
-    if (typeof v === "string" || typeof v === "number" || typeof v === "boolean") {
-      const s = String(v);
-      if (s !== "" && s.length <= 60 && !/^[0-9a-f]{6,}$/i.test(s)) pairs.push(`${k} ${s}`);
-    }
-    if (pairs.length >= 3) break;
-  }
-  // Nothing human to stage → null: the caller delivers via the relay
-  // instead (the backend can dereference what we cannot).
-  if (pairs.length === 0) return null;
-  const title = verb !== null && !verbIsReference ? humanizeActionName(verb) : "my selection";
-  return `I picked ${title}: ${pairs.join(", ")} — please continue.`;
-}
 
 export function AppShell() {
   const navigate = useNavigate();
@@ -155,41 +70,11 @@ export function AppShell() {
   const chatRef = useRef<GuueyChatHandle | null>(null);
   chatRef.current = chat;
 
-  // Post-turn card actions (the founder's in-card Confirm): the kit's
-  // relay delivers a click only while its turn can still hear it — past
-  // that, the pod 404s BY DESIGN and the raw failure surfaced in-card
-  // ("agent not listening", warm-up 2026-08-22). The widget solved this
-  // beat with #198/#218 composer STAGING; until guuey#356 makes that a
-  // kit seam, this shell ports the policy: try the kit's delivery first,
-  // and when a SEMANTIC action comes back errored, stage its projection
-  // into the composer instead — the click becomes the visitor's next
-  // message, one Send away. Stable identity (ref-read), per the
-  // no-churn rule.
-  const stagedCallTool = useCallback(
-    async (req: UiActionRequest): Promise<McpToolCallResult> => {
-      // SEMANTIC actions stage into the composer ONLY when the wire
-      // carries real, human-projectable params. The ggui dispatch shape
-      // can instead carry a REFERENCE ({actionId: <hash>, intent:
-      // "selectSlot"} — the payload stays inside the iframe, resolved
-      // backend-side): staging a hash actively misleads (round-4 receipt:
-      // the agent replied "which time works?" to a hash it can never
-      // resolve), so reference-shaped actions go to the kit relay — the
-      // pod/persisted doors are the only parties that can dereference
-      // them (guuey#356's design axis). Params-shaped actions stage; the
-      // kit's non-error degrade makes result inspection useless (#215),
-      // so the split keys on the REQUEST shape, the one honest signal.
-      if (UI_SEMANTIC_ACTION_TOOLS.has(req.name)) {
-        const projection = projectSemanticAction(req.arguments);
-        if (projection !== null) {
-          chatRef.current?.prefill(projection, { focus: true });
-          return { content: [{ type: "text", text: ACTION_STAGED_MSG }] };
-        }
-      }
-      const kit = chatRef.current?.viewSlotProps().onCallTool;
-      return kit !== undefined ? kit(req) : unavailableToolCallResult();
-    },
-    [],
-  );
+  // Post-turn card actions: the kit OWNS the #198/#215/#218 staging
+  // policy since @guuey/chat 0.14.0 (guuey#356's seam — withActionStaging
+  // wraps the default relay, and viewSlotProps carries it, "canvas hosts
+  // get it for free"). This shell's interim port is deleted with it: the
+  // spread below IS the staged relay, one implementation everywhere.
 
   // The demo-tour ask hook (guuey#303 family, public contract like
   // `demo:render-complete`): an external step machine dispatches
@@ -296,7 +181,6 @@ export function AppShell() {
                   mount={selected.mount}
                   title={selected.title}
                   {...(chat !== null ? chat.viewSlotProps() : {})}
-                  onCallTool={stagedCallTool}
                   hostContext={VIEW_HOST_CONTEXT}
                   className="canvas-view-mount"
                 />
