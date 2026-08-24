@@ -18,11 +18,11 @@ importers:
   web:
     dependencies:
       '@guuey/chat':
-        specifier: 0.14.1
-        version: 0.14.1(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+        specifier: 0.14.2
+        version: 0.14.2(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       '@guuey/mcp-apps-host':
-        specifier: 0.14.1
-        version: 0.14.1(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(zod@4.4.3)
+        specifier: 0.14.2
+        version: 0.14.2(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(zod@4.4.3)
       oidc-client-ts:
         specifier: ^3.1.0
         version: 3.5.0
@@ -861,13 +861,13 @@ packages:
       '@modelcontextprotocol/sdk':
         optional: true
 
-  '@guuey/agent-client@0.14.1':
-    resolution: {integrity: sha512-KuQU01PMiP7MkOxQT6Ib2xYX5AJ3CQSkh9kBN5KsdRdlOsmea9MDSzg19EL/hnJZCPjhYCQHJ0+eqV6092M68Q==}
+  '@guuey/agent-client@0.14.2':
+    resolution: {integrity: sha512-v/lamOXk0mGbhz1JwKsHrpl7fq6twZXpRx2Id/AOFQsjgAHFWtDhFXEkpagLudKqwvDsRa8Qwq5IeutOOLQz5g==}
     peerDependencies:
       react: '>=18'
 
-  '@guuey/chat@0.14.1':
-    resolution: {integrity: sha512-gjbWpLehRV0OqM2nVdPdKU+XcPI40+hTa1xF3bFCbkJVY+yAFvtqZnd/Yv6L7FvIWoZ0t+12T/yjaJrUJpj6+w==}
+  '@guuey/chat@0.14.2':
+    resolution: {integrity: sha512-8bstxhVezoiJ1gOidIuiDhXWPPGj0Vq7jVz59U64kn4yWY/Vxvzrz1ssRxhrk8J4soY493CROT/G1w7z1RkbVg==}
     peerDependencies:
       react: '>=18'
       react-native: '>=0.76'
@@ -904,8 +904,8 @@ packages:
       '@openai/agents':
         optional: true
 
-  '@guuey/mcp-apps-host@0.14.1':
-    resolution: {integrity: sha512-DD2trk07G0IVM9iVmR7SZiDVorWyMB3R5Jvm1cFlRftVj3IJi58/nQHUoFAnOJMGJyUPuaaHHtrLBAICNwiKwA==}
+  '@guuey/mcp-apps-host@0.14.2':
+    resolution: {integrity: sha512-ybfE3fZ46HHu3TFK3DgOWGMVtGqVF0s1J9Gi+DZYclzti5rFAiBLjFbn/8FVdLsN495eKAv+MxcqTXkM4R16KA==}
     peerDependencies:
       react: '>=18'
     peerDependenciesMeta:
@@ -4850,9 +4850,9 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@guuey/agent-client@0.14.1(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(zod@4.4.3)':
+  '@guuey/agent-client@0.14.2(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(zod@4.4.3)':
     dependencies:
-      '@guuey/mcp-apps-host': 0.14.1(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(zod@4.4.3)
+      '@guuey/mcp-apps-host': 0.14.2(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(zod@4.4.3)
       '@silverprotocol/core': 0.5.1
       react: 19.2.8
     transitivePeerDependencies:
@@ -4860,10 +4860,10 @@ snapshots:
       - react-dom
       - zod
 
-  '@guuey/chat@0.14.1(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
+  '@guuey/chat@0.14.2(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
     dependencies:
-      '@guuey/agent-client': 0.14.1(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(zod@4.4.3)
-      '@guuey/mcp-apps-host': 0.14.1(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(zod@4.4.3)
+      '@guuey/agent-client': 0.14.2(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(zod@4.4.3)
+      '@guuey/mcp-apps-host': 0.14.2(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(zod@4.4.3)
       '@silverprotocol/core': 0.5.1
       '@silverprotocol/richtext': 0.5.1
       zod: 4.4.3
@@ -4915,7 +4915,7 @@ snapshots:
     optionalDependencies:
       '@anthropic-ai/claude-agent-sdk': 0.3.235(@anthropic-ai/sdk@0.117.1(zod@4.4.3))(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(zod@4.4.3)
 
-  '@guuey/mcp-apps-host@0.14.1(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(zod@4.4.3)':
+  '@guuey/mcp-apps-host@0.14.2(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(zod@4.4.3)':
     dependencies:
       '@ggui-ai/protocol': 0.12.0(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       '@modelcontextprotocol/ext-apps': 1.7.5(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(zod@4.4.3)
