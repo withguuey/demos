@@ -59,12 +59,15 @@ Open http://localhost:6890 and talk to the agent.
 ## Deploying your own
 
 ```bash
-guuey login                        # device-flow auth
-guuey apps create --name my-orderly # create an app (creating is free)
-guuey deploy                       # ship the definition — declarative, so no build leg;
-                                   #   your 7-day trial starts at this first successful deploy
+npx guuey login                        # device-flow auth
+npx guuey apps create --name my-orderly    # create an app (creating is free)
+npx guuey deploy                       # ship the definition — declarative, so no build leg;
+                                       #   your 7-day trial starts at this first successful deploy
 pnpm bootstrap -- --link           # bind the deployed app into the web frontend
 ```
+
+The repo pins `@guuey/cli`, so `npx guuey` runs the local bin — no global
+install needed. (Bare `guuey` is not on PATH in a plain shell.)
 
 **Cost note for forks:** this manifest carries `agent.deploy.size: "md"`
 (the hosted demo's pod size). If you are deploying your own copy and want
