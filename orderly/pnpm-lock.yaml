@@ -18,8 +18,8 @@ importers:
   web:
     dependencies:
       '@guuey/chat':
-        specifier: 0.15.1
-        version: 0.15.1(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+        specifier: 0.16.7
+        version: 0.16.7(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       '@guuey/mcp-apps-host':
         specifier: 0.15.1
         version: 0.15.1(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(zod@4.4.3)
@@ -861,13 +861,13 @@ packages:
       '@modelcontextprotocol/sdk':
         optional: true
 
-  '@guuey/agent-client@0.15.1':
-    resolution: {integrity: sha512-TsdSirwDYadlT49N7u2FHcrG/AkA9DGGpvjw40SmM3rVm79h1mmJAQlJE6mKOcvlCWO/ilHyQXL73DPu5FlN4A==}
+  '@guuey/agent-client@0.16.7':
+    resolution: {integrity: sha512-aA5wh5q0AWGGCMb/MNzvpXSP0QMktNExtqVpeVaCV8R+WPW0pV9aqsMv7NKJciV283qIl9soSeAC7gHLu3OP2w==}
     peerDependencies:
       react: '>=18'
 
-  '@guuey/chat@0.15.1':
-    resolution: {integrity: sha512-UR2oh4FMHlx97tIx68khfc4NYdWFnRxQYkIdrRHIAAJGgfnsyPYNSWOL7UjJZCL+PEp9F4KwlQiuESA0tlkLjA==}
+  '@guuey/chat@0.16.7':
+    resolution: {integrity: sha512-LoFLLg0dHYBY4D+zOn3w9esk8pUqR8dQlkkITcealqJlF96PLxHDrRMpYferJDedsznFKFDm8viDyDEb1BRd4g==}
     peerDependencies:
       react: '>=18'
       react-native: '>=0.76'
@@ -906,6 +906,14 @@ packages:
 
   '@guuey/mcp-apps-host@0.15.1':
     resolution: {integrity: sha512-lIPS+P8xDcWtgJAdH4utFVZ6nmudo6MsJQMFXCuzqxe1RGIu9uyNSsaQc/iuDgTVBo9DZGnMmyvT6ts7uENc8Q==}
+    peerDependencies:
+      react: '>=18'
+    peerDependenciesMeta:
+      react:
+        optional: true
+
+  '@guuey/mcp-apps-host@0.16.7':
+    resolution: {integrity: sha512-hXZvw3ntj0KEhgizEjRjWapak7KeUm0PIierZC0TQ9PfIUi6mlpxOMhyE4EC9IKyjH2Ji560zdYzMLUKbPpKzw==}
     peerDependencies:
       react: '>=18'
     peerDependenciesMeta:
@@ -1639,6 +1647,9 @@ packages:
   '@silverprotocol/core@0.5.1':
     resolution: {integrity: sha512-K/Ple05RQOC5VXJ9uh715j4xTI5YvyxJ10gb/pqmRNY1k4oNEI16EcEYcC8jOSYoOjw4TqxTuyNRuk3OwHGsZw==}
 
+  '@silverprotocol/core@0.5.2':
+    resolution: {integrity: sha512-2EooUPsO95U1sWPye5KrkDmW8tKk2z+fi81p6pvFi9Mn+WsKB6l09adKxOLZLMu5r6uRtY90QxcpARBJmpHZdw==}
+
   '@silverprotocol/google-adk@0.5.0':
     resolution: {integrity: sha512-dlvGP52wPkN0WPgCnV0Xor86oI6aGqKhh3w3D3eQeN+RfoVYuWA1Dyfg6MufJwJznrhRSdWltkT1izO1PisTIQ==}
     peerDependencies:
@@ -1655,8 +1666,8 @@ packages:
       '@openai/agents':
         optional: true
 
-  '@silverprotocol/richtext@0.5.1':
-    resolution: {integrity: sha512-dhhL0SD36WzNuycrZCuG1FS/TOhjIm1Pbr4V7BWM/8SdK0FGLgX6Tdz20v+odziLmNjmfRHGu+WxnhYEEUYMzw==}
+  '@silverprotocol/richtext@0.5.2':
+    resolution: {integrity: sha512-2J3uFUUTF/yijVkEsK33iw8/ujY5YGcabJhzSfgT2IhDhXhVHf/0tFOvn2DijMhje6yr8VUFGLQs8U86V/pVFA==}
 
   '@smithy/abort-controller@2.2.0':
     resolution: {integrity: sha512-wRlta7GuLWpTqtFfGo+nZyOO1vEvewdNR1R4rTxpC8XU6vG/NDyrFBhwLZsqg1NUoR1noVaXJPC/7ZK47QCySw==}
@@ -4850,22 +4861,22 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@guuey/agent-client@0.15.1(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(zod@4.4.3)':
+  '@guuey/agent-client@0.16.7(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(zod@4.4.3)':
     dependencies:
-      '@guuey/mcp-apps-host': 0.15.1(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(zod@4.4.3)
-      '@silverprotocol/core': 0.5.1
+      '@guuey/mcp-apps-host': 0.16.7(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(zod@4.4.3)
+      '@silverprotocol/core': 0.5.2
       react: 19.2.8
     transitivePeerDependencies:
       - '@modelcontextprotocol/sdk'
       - react-dom
       - zod
 
-  '@guuey/chat@0.15.1(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
+  '@guuey/chat@0.16.7(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
     dependencies:
-      '@guuey/agent-client': 0.15.1(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(zod@4.4.3)
-      '@guuey/mcp-apps-host': 0.15.1(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(zod@4.4.3)
-      '@silverprotocol/core': 0.5.1
-      '@silverprotocol/richtext': 0.5.1
+      '@guuey/agent-client': 0.16.7(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(zod@4.4.3)
+      '@guuey/mcp-apps-host': 0.16.7(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(zod@4.4.3)
+      '@silverprotocol/core': 0.5.2
+      '@silverprotocol/richtext': 0.5.2
       zod: 4.4.3
     optionalDependencies:
       react: 19.2.8
@@ -4920,6 +4931,18 @@ snapshots:
       '@ggui-ai/protocol': 0.12.0(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       '@modelcontextprotocol/ext-apps': 1.7.5(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(zod@4.4.3)
       '@silverprotocol/core': 0.5.1
+    optionalDependencies:
+      react: 19.2.8
+    transitivePeerDependencies:
+      - '@modelcontextprotocol/sdk'
+      - react-dom
+      - zod
+
+  '@guuey/mcp-apps-host@0.16.7(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(zod@4.4.3)':
+    dependencies:
+      '@ggui-ai/protocol': 0.12.0(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      '@modelcontextprotocol/ext-apps': 1.7.5(@modelcontextprotocol/sdk@1.30.0(zod@4.4.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(zod@4.4.3)
+      '@silverprotocol/core': 0.5.2
     optionalDependencies:
       react: 19.2.8
     transitivePeerDependencies:
@@ -5483,6 +5506,10 @@ snapshots:
     dependencies:
       zod: 4.4.3
 
+  '@silverprotocol/core@0.5.2':
+    dependencies:
+      zod: 4.4.3
+
   '@silverprotocol/google-adk@0.5.0':
     dependencies:
       '@silverprotocol/core': 0.5.0
@@ -5491,7 +5518,7 @@ snapshots:
     dependencies:
       '@silverprotocol/core': 0.5.0
 
-  '@silverprotocol/richtext@0.5.1': {}
+  '@silverprotocol/richtext@0.5.2': {}
 
   '@smithy/abort-controller@2.2.0':
     dependencies:

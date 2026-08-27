@@ -9,7 +9,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@guuey/chat": "0.15.1",
+    "@guuey/chat": "0.16.7",
     "@guuey/mcp-apps-host": "0.15.1",
     "oidc-client-ts": "^3.1.0",
     "qrcode": "^1.5.4",
