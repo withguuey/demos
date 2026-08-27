@@ -16,7 +16,6 @@
   --accent-deep: #8f7119;
   --bg: #f6f1e7; /* cream paper */
   --bg-soft: #fdfbf6; /* card stock */
-  --bg-deep: #efe8d9; /* the canvas ground behind generated UI */
   --panel: #e8dfce; /* linen — the printed-menu panel */
   --fg: #2b211a; /* espresso ink */
   --fg-soft: rgba(43, 33, 26, 0.65);
@@ -35,7 +34,6 @@
   --accent-deep: #d9b64a;
   --bg: #201913;
   --bg-soft: #2b211a;
-  --bg-deep: #1a140f;
   --panel: #3a2e23;
   --fg: #f6f1e7;
   --fg-soft: rgba(246, 241, 231, 0.68);

@@ -19,7 +19,6 @@
   --accent-deep: #ffc96b;
   --bg: #101318; /* carbon */
   --bg-soft: #171b22; /* panel */
-  --bg-deep: #0b0d11; /* the canvas ground behind generated UI */
   --panel: #14181f; /* rail / sub-panel */
   --fg: #e8ecf1; /* chalk */
   --fg-soft: rgba(232, 236, 241, 0.65);
@@ -40,7 +39,6 @@
   --accent-deep: #b87a14;
   --bg: #f4f6f9;
   --bg-soft: #ffffff;
-  --bg-deep: #e9edf2;
   --panel: #eef1f5;
   --fg: #101318;
   --fg-soft: rgba(16, 19, 24, 0.65);

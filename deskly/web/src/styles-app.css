@@ -137,9 +137,11 @@
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-  /* Graph paper: hairline rules every 40px over the deep ground — the
-     quiet grid the generated UI sits on. */
-  background-color: var(--bg-deep);
+  /* Graph paper: hairline rules every 40px over the rail's ground —
+     the quiet grid the generated UI sits on. Ground follows the agent
+     rail (guuey#420 founder eyeball; #403 agent-mode-layout principle:
+     the canvas wears the ACTIVE panel's background). */
+  background-color: var(--bg);
   background-image:
     repeating-linear-gradient(
       0deg,

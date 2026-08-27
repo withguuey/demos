@@ -137,7 +137,10 @@
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-  background: var(--bg-deep);
+  /* Follows the agent rail's ground (guuey#420 founder eyeball; the
+     #403 agent-mode-layout principle: the canvas wears the ACTIVE
+     panel's background — rail and canvas read as one agent surface). */
+  background: var(--bg);
 }
 
 .canvas .page {
