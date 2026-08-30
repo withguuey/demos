@@ -8,7 +8,7 @@
  */
 
 export const WEEK_LABEL = "Week of Mar 9–13";
-export const STUDIO_NAME = "Mill Street studio";
+export const STUDIO_NAME = "Lock & Lune studio";
 
 export const DAYS = [
   { label: "Mon", date: "9" },
