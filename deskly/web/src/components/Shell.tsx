@@ -34,9 +34,14 @@ export function Shell() {
           <NavLink to={CHAT_PATH}>Chat</NavLink>
           <NavLink to={HOME_PATH}>Home</NavLink>
           {mode === null ? (
-            <NavLink to="/login" className="btn btn-accent">
-              Sign in
-            </NavLink>
+            // No sign-in affordance until OIDC is configured (guuey#928): a
+            // guest gets a thread from the chat itself, so an unconfigured
+            // deployment shows no dead door on its front page.
+            oidcConfigured() ? (
+              <NavLink to="/login" className="btn btn-accent">
+                Sign in
+              </NavLink>
+            ) : null
           ) : (
             <button type="button" className="btn" onClick={() => void handleLogOut()}>
               Log out{mode === "guest" ? " (guest)" : ""}

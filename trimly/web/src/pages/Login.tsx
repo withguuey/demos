@@ -65,11 +65,9 @@ export function Login() {
           <button type="button" className="btn btn-accent btn-wide" onClick={() => void signIn()}>
             Sign in
           </button>
-        ) : (
-          <button type="button" className="btn btn-wide" disabled title="Configure auth.oidc in guuey.app.json (or via bootstrap) to enable sign-in">
-            Sign in — not configured yet
-          </button>
-        )}
+        ) : null /* OIDC unconfigured: the guest door alone. Developer note, never a
+                    customer-facing disabled control (guuey#928): configure auth.oidc in
+                    guuey.app.json (or via bootstrap) to enable sign-in. */}
         <button type="button" className="btn btn-wide" onClick={guest}>
           Continue as guest
         </button>
