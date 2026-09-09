@@ -14,6 +14,7 @@ import { Home } from "./pages/Home";
 import { Orders } from "./pages/Orders";
 import { Refunds } from "./pages/Refunds";
 import { TalkOnMobile } from "./pages/TalkOnMobile";
+import { NotFound } from "./pages/NotFound";
 
 document.documentElement.dataset.mode = appConfig.theme.mode;
 document.documentElement.style.setProperty("--app-accent", appConfig.theme.accent);
@@ -34,9 +35,12 @@ const router = createBrowserRouter([
   {
     // Marketing chrome: landing + login.
     element: <Shell />,
+    // guuey#1146: a real not-found page, never the router's developer screen.
+    errorElement: <NotFound />,
     children: [
       { path: "/", element: <Landing /> },
       { path: "/login", element: <Login /> },
+      { path: "*", element: <NotFound /> },
     ],
   },
   {
@@ -44,11 +48,13 @@ const router = createBrowserRouter([
     // sidebar, generated UI on the main canvas (guuey#303).
     path: "/app",
     element: <AppShell />,
+    errorElement: <NotFound />,
     children: [
       { index: true, element: <Orders /> },
       { path: "refunds", element: <Refunds /> },
       { path: "setup", element: <Home /> },
       { path: "mobile", element: <TalkOnMobile /> },
+      { path: "*", element: <NotFound /> },
     ],
   },
 ]);

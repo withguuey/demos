@@ -808,3 +808,23 @@ a:hover {
   border-top: 1px solid var(--line);
   border-left-color: transparent;
 }
+
+/* guuey#1146 — the not-found page: calm, on-brand, never a developer screen. */
+.notfound {
+  display: grid;
+  gap: 14px;
+  justify-items: start;
+  padding: 72px 24px;
+}
+.notfound-code {
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.notfound h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 34px;
+  line-height: 1.15;
+}
