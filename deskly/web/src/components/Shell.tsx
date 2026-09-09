@@ -8,6 +8,12 @@ import { CHAT_PATH, HOME_PATH } from "../routes";
 import { currentIdentityMode, logOut } from "../lib/identity";
 import { oidcConfigured, signOutOidc } from "../lib/oidc";
 
+// guuey#1063 — the demo's one exit to Guuey. Visitors who like what they see had
+// no door back (HN, 2026-09-08: 34 arrivals, 0 continued). UTM = growth's
+// evergreen-link taxonomy; utm_content names this shell.
+const GUUEY_EXIT_URL =
+  "https://guuey.com/hire-a-rep?utm_source=demo&utm_medium=referral&utm_campaign=channel&utm_content=deskly-shell";
+
 export function Shell() {
   const navigate = useNavigate();
   // Subscribing to the location re-renders this chrome on every navigation,
@@ -31,6 +37,9 @@ export function Shell() {
           <span>{appConfig.brand.name}</span>
         </Link>
         <nav>
+          <a className="guuey-exit" href={GUUEY_EXIT_URL} target="_blank" rel="noopener noreferrer">
+            Built with Guuey →
+          </a>
           <NavLink to={CHAT_PATH}>Chat</NavLink>
           <NavLink to={HOME_PATH}>Home</NavLink>
           {mode === null ? (

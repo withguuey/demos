@@ -861,3 +861,27 @@ a:hover {
     font-size: 36px;
   }
 }
+
+/* guuey#1063 — the exit line to Guuey: quiet, persistent, never a button. */
+.guuey-exit {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--fg-soft);
+  text-decoration: none;
+}
+.guuey-exit:hover {
+  color: var(--fg);
+  text-decoration: underline;
+}
+.topbar nav a.guuey-exit {
+  margin-right: 6px;
+  opacity: 0.85;
+}
+.sidebar-menus a.guuey-exit {
+  margin-top: 10px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+  border-left-color: transparent;
+}
